@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        device: {
+          active: "hsl(var(--device-active))",
+          inactive: "hsl(var(--device-inactive))",
+          warning: "hsl(var(--device-warning))",
+          error: "hsl(var(--device-error))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +63,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-card": "var(--gradient-card)",
+        "gradient-background": "var(--gradient-background)",
+      },
+      boxShadow: {
+        "card": "var(--shadow-card)",
+        "active": "var(--shadow-active)",
+      },
+      transitionTimingFunction: {
+        "smooth": "var(--transition-smooth)",
       },
       borderRadius: {
         lg: "var(--radius)",
