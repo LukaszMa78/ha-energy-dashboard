@@ -1348,24 +1348,44 @@ const EnergyFlowDashboard = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           {/* Panel List */}
-          <div className="max-h-96 overflow-y-auto space-y-1">
+          <div className="max-h-96 overflow-y-auto space-y-2">
             {pvPanels.panels.map((panel, i) => (
-              <div key={i} className={`flex items-center justify-between p-2 rounded text-xs border ${
+              <div key={i} className={`p-3 rounded-lg border ${
                 panel.active 
                   ? 'bg-primary/5 border-primary/20' 
                   : 'bg-muted/50 border-muted-foreground/20 opacity-60'
               }`}>
-                <div className="flex items-center gap-2 min-w-0">
-                  <div className={`w-2 h-2 rounded-full ${
+                <div className="flex items-center gap-2 mb-3">
+                  <div className={`w-3 h-3 rounded-full ${
                     panel.active ? 'bg-primary' : 'bg-muted-foreground'
                   }`} />
-                  <span className="font-medium">{panel.name}</span>
+                  <span className="font-semibold text-sm">{panel.name}</span>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    panel.active 
+                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' 
+                      : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
+                  }`}>
+                    {panel.active ? 'Active' : 'Inactive'}
+                  </span>
                 </div>
-                <div className="flex items-center gap-3 font-mono text-xs">
-                  <span>{panel.energyToday}kWh</span>
-                  <span className="text-primary">{panel.power}kW</span>
-                  <span>{panel.voltage}V</span>
-                  <span>{panel.current}A</span>
+                
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="space-y-1">
+                    <div className="text-muted-foreground font-medium">Energy Today</div>
+                    <div className="font-mono text-primary font-bold">{panel.energyToday} kWh</div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-muted-foreground font-medium">Current Power</div>
+                    <div className="font-mono text-primary font-bold">{panel.power} kW</div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-muted-foreground font-medium">Voltage</div>
+                    <div className="font-mono text-foreground font-bold">{panel.voltage} V</div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-muted-foreground font-medium">Current</div>
+                    <div className="font-mono text-foreground font-bold">{panel.current} A</div>
+                  </div>
                 </div>
               </div>
             ))}
