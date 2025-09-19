@@ -1072,7 +1072,14 @@ const EnergyFlowDashboard = () => {
         <CardTitle className="flex items-center gap-2 text-sm">
           <Battery className="w-4 h-4 text-primary" />
           Battery Storage
-          <Badge variant={battery.power > 0 ? "default" : "secondary"} className="ml-auto text-base px-4 py-2">
+          <Badge 
+            variant={battery.power > 0 ? "outline" : "destructive"} 
+            className={`ml-auto text-base px-4 py-2 ${
+              battery.power > 0 
+                ? "bg-green-500 text-white border-green-500 hover:bg-green-600" 
+                : ""
+            }`}
+          >
             {battery.power > 0 ? 'Charging' : 'Discharging'}
           </Badge>
         </CardTitle>
