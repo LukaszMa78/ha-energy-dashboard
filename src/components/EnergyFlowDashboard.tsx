@@ -589,8 +589,8 @@ const EnergyFlowDashboard = () => {
               <div className="text-muted-foreground text-xs">Upcoming Forecasts</div>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 {pvPanels.forecastUpcoming.map((forecast, i) => (
-                  <div key={i} className="flex justify-between">
-                    <span className="text-muted-foreground">Forecast {forecast.day}</span>
+                  <div key={i} className="flex items-center gap-1">
+                    <span className="text-muted-foreground">Forecast {forecast.day}:</span>
                     <span className="font-mono text-foreground">{forecast.value}kWh</span>
                   </div>
                 ))}
