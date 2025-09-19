@@ -29,49 +29,41 @@ full_access: false
 options:
   entities:
     solar_panels: []
-    battery:
-      soc: ""
-      power: ""
-      voltage: ""
-      current: ""
-    grid:
-      power: ""
-      voltage: ""
-      current: ""
-      import_energy: ""
-      export_energy: ""
-    inverter:
-      power: ""
-      efficiency: ""
-      temperature: ""
-      ac_phases: []
-    house:
-      total_power: ""
-      rooms: []
+    battery_soc: ""
+    battery_power: ""
+    battery_voltage: ""
+    battery_current: ""
+    grid_power: ""
+    grid_voltage: ""
+    grid_current: ""
+    grid_import_energy: ""
+    grid_export_energy: ""
+    inverter_power: ""
+    inverter_efficiency: ""
+    inverter_temperature: ""
+    inverter_ac_phases: []
+    house_total_power: ""
+    house_rooms: []
 
 schema:
   entities:
     solar_panels: ["str"]
-    battery: 
-      soc: "str"
-      power: "str" 
-      voltage: "str?"
-      current: "str?"
-    grid:
-      power: "str"
-      voltage: "str?"
-      current: "str?"
-      import_energy: "str?"
-      export_energy: "str?"
-    inverter:
-      power: "str"
-      efficiency: "str?"
-      temperature: "str?"
-      ac_phases: ["str"]
-    house:
-      total_power: "str"
-      rooms:
-        - name: "str"
-          entities: ["str"]
+    battery_soc: "str"
+    battery_power: "str" 
+    battery_voltage: "str?"
+    battery_current: "str?"
+    grid_power: "str"
+    grid_voltage: "str?"
+    grid_current: "str?"
+    grid_import_energy: "str?"
+    grid_export_energy: "str?"
+    inverter_power: "str"
+    inverter_efficiency: "str?"
+    inverter_temperature: "str?"
+    inverter_ac_phases: ["str"]
+    house_total_power: "str"
+    house_rooms:
+      - name: "str"
+        entities: ["str"]
 
 image: "ghcr.io/lukaszma78/ha-energy-dashboard/{arch}"
