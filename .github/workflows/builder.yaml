@@ -41,11 +41,11 @@ jobs:
           done
 
           if [ ${#changed_addons[@]} -eq 0 ]; then
-            echo "changed=[]" >> $GITHUB_OUTPUT
+            echo "changed=false" >> $GITHUB_OUTPUT
             echo "addons=[]" >> $GITHUB_OUTPUT
           else
             changed=$(printf "%s\n" "${changed_addons[@]}" | jq -R . | jq -s .)
-            echo "changed=${changed}" >> $GITHUB_OUTPUT
+            echo "changed=true" >> $GITHUB_OUTPUT
             echo "addons=${changed}" >> $GITHUB_OUTPUT
           fi
 
