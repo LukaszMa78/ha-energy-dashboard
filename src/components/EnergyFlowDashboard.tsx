@@ -511,7 +511,7 @@ const EnergyFlowDashboard = () => {
                 <div>
                   <div className="text-sm font-medium">{device.name}</div>
                   <div className="text-xs text-muted-foreground">
-                    {device.voltage}V • {device.current}A
+                    {device.power}kW • {device.voltage}V • {device.current}A
                   </div>
                 </div>
               </div>
