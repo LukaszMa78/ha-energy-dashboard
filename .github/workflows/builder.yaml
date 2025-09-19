@@ -30,29 +30,13 @@ jobs:
       - name: Find add-on directories
         id: changed_addons
         run: |
-          declare -a changed_addons
-          for file in ${{ steps.changed_files.outputs.all }}; do
-            if [[ $file =~ ^(.*/)?([^/]+)/(build.yaml|config.yaml|Dockerfile|rootfs) ]]; then
-              addon="${BASH_REMATCH[2]}"
-              if [[ ! " ${changed_addons[@]} " =~ " ${addon} " ]]; then
-                changed_addons+=("${addon}")
-              fi
-            fi
-          done
-
-          # Always build energy-dashboard if this is a push to main
+          # Always build energy-dashboard on main branch
           if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
-            changed_addons=("energy-dashboard")
-          fi
-
-          if [ ${#changed_addons[@]} -eq 0 ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "addons=[\"energy-dashboard\"]" >> $GITHUB_OUTPUT
+          else
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "addons=[]" >> $GITHUB_OUTPUT
-          else
-            # Properly format JSON array
-            json_array=$(printf '"%s"\n' "${changed_addons[@]}" | jq -s .)
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "addons=${json_array}" >> $GITHUB_OUTPUT
           fi
 
   build:
