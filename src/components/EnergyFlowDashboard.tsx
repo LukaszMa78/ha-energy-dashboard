@@ -439,37 +439,42 @@ const EnergyFlowDashboard = () => {
     </Card>
   );
 
-  const BackupDevicesCard = ({ devices }) => (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <Shield className="w-4 h-4 text-primary" />
-          Backup Devices
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        {devices.map((device, idx) => (
-          <div key={idx} className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
-            <div className="flex items-center gap-2">
-              <device.icon className="w-4 h-4 text-primary" />
-              <div>
-                <div className="text-sm font-medium">{device.name}</div>
-                <div className="text-xs text-muted-foreground">
-                  {device.voltage}V • {device.current}A
+  const BackupDevicesCard = ({ devices }) => {
+    const totalPower = devices.reduce((sum, device) => sum + device.power, 0);
+    
+    return (
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-sm">
+            <Shield className="w-4 h-4 text-primary" />
+            Backup Devices
+            <Badge className="ml-auto">{totalPower.toFixed(1)}kW</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {devices.map((device, idx) => (
+            <div key={idx} className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <device.icon className="w-4 h-4 text-primary" />
+                <div>
+                  <div className="text-sm font-medium">{device.name}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {device.voltage}V • {device.current}A
+                  </div>
                 </div>
               </div>
+              <div className="text-right">
+                <div className="font-mono text-sm text-primary">{device.power}kW</div>
+                <Badge variant="outline" className="text-xs">
+                  {device.status}
+                </Badge>
+              </div>
             </div>
-            <div className="text-right">
-              <div className="font-mono text-sm text-primary">{device.power}kW</div>
-              <Badge variant="outline" className="text-xs">
-                {device.status}
-              </Badge>
-            </div>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  );
+          ))}
+        </CardContent>
+      </Card>
+    );
+  };
 
   const PVPanelsCard = ({ pvPanels }) => (
     <Card className="bg-gradient-card border-primary/20">
@@ -531,7 +536,7 @@ const EnergyFlowDashboard = () => {
     </Card>
   );
 
-  const HouseConsumptionCard = ({ house }) => (
+  const HouseConsumptionCard = ({ house, backupDevices }) => (
     <Card className="h-fit">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
@@ -540,32 +545,34 @@ const EnergyFlowDashboard = () => {
           <Badge className="ml-auto">{house.totalPower}kW</Badge>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2">
-        {house.floors.map((floor, floorIdx) => {
-          const floorId = `floor-${floorIdx}`;
-          const isExpanded = expandedFloors.includes(floorIdx);
-          
-          return (
-            <div key={floorIdx} className="space-y-1">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full justify-between p-2 h-auto"
-                onClick={() => toggleFloor(floorIdx)}
-              >
-                <div className="flex items-center gap-2">
-                  <Building className="w-3 h-3" />
-                  <span className="text-sm">{floor.name}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-primary">{floor.power}kW</span>
-                  {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
-                </div>
-              </Button>
-              
-              {isExpanded && (
-                <div className="ml-4 space-y-1 border-l border-border pl-2">
-                  {floor.rooms.map((room, roomIdx) => {
+      <CardContent className="space-y-4">
+        {/* House floors */}
+        <div className="space-y-2">
+          {house.floors.map((floor, floorIdx) => {
+            const floorId = `floor-${floorIdx}`;
+            const isExpanded = expandedFloors.includes(floorIdx);
+            
+            return (
+              <div key={floorIdx} className="space-y-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-between p-2 h-auto"
+                  onClick={() => toggleFloor(floorIdx)}
+                >
+                  <div className="flex items-center gap-2">
+                    <Building className="w-3 h-3" />
+                    <span className="text-sm">{floor.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs text-primary">{floor.power}kW</span>
+                    {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+                  </div>
+                </Button>
+                
+                {isExpanded && (
+                  <div className="ml-4 space-y-1 border-l border-border pl-2">
+                    {floor.rooms.map((room, roomIdx) => {
                     const roomId = `${floorId}-room-${roomIdx}`;
                     const isRoomExpanded = expandedRooms.includes(roomId);
                     
@@ -613,6 +620,12 @@ const EnergyFlowDashboard = () => {
             </div>
           );
         })}
+        </div>
+        
+        {/* Backup Devices */}
+        <div className="pt-2 border-t border-border">
+          <BackupDevicesCard devices={backupDevices} />
+        </div>
       </CardContent>
     </Card>
   );
@@ -651,14 +664,14 @@ const EnergyFlowDashboard = () => {
           <PVSystemCard pv={energyData.pv2} />
         </div>
 
-        {/* Top Middle: Backup Devices */}
+        {/* Top Middle: PV Panels Array */}
         <div className="xl:col-span-2">
-          <BackupDevicesCard devices={energyData.backupDevices} />
+          <PVPanelsCard pvPanels={energyData.pvPanels} />
         </div>
 
         {/* Top Right: House Consumption */}
         <div className="xl:col-span-1">
-          <HouseConsumptionCard house={energyData.house} />
+          <HouseConsumptionCard house={energyData.house} backupDevices={energyData.backupDevices} />
         </div>
 
         {/* Middle Left: Battery */}
@@ -666,9 +679,43 @@ const EnergyFlowDashboard = () => {
           <BatteryCard battery={energyData.battery} />
         </div>
 
-        {/* Middle Center: PV Panels Array */}
+        {/* Middle Center: Inverter */}
         <div className="xl:col-span-2">
-          <PVPanelsCard pvPanels={energyData.pvPanels} />
+          <InverterCard inverter={energyData.inverter} />
+        </div>
+
+        {/* Middle Right: Empty for flow arrows */}
+        <div className="xl:col-span-1 relative">
+          {/* Energy Flow Arrows */}
+          <div className="absolute inset-0">
+            {/* PV to Inverter flows */}
+            <AnimatedArrow 
+              direction="right" 
+              power={energyData.pv1.power + energyData.pv2.power} 
+              className="top-1/4 left-1/2 transform -translate-x-1/2"
+            />
+            
+            {/* Inverter to Battery */}
+            <AnimatedArrow 
+              direction="down" 
+              power={energyData.battery.power} 
+              className="top-1/2 left-1/4 transform -translate-x-1/2"
+            />
+            
+            {/* Inverter to Home */}
+            <AnimatedArrow 
+              direction="up" 
+              power={energyData.house.totalPower} 
+              className="top-3/4 left-3/4 transform -translate-x-1/2"
+            />
+            
+            {/* Grid interaction */}
+            <AnimatedArrow 
+              direction={energyData.grid.power > 0 ? "left" : "right"} 
+              power={energyData.grid.power} 
+              className="bottom-1/4 left-1/2 transform -translate-x-1/2"
+            />
+          </div>
         </div>
 
         {/* Middle Right: Empty for flow arrows */}
@@ -708,44 +755,8 @@ const EnergyFlowDashboard = () => {
         {/* Bottom Left: Empty */}
         <div className="xl:col-span-1"></div>
 
-        {/* Bottom Center: Inverter */}
-        <div className="xl:col-span-2">
-          <InverterCard inverter={energyData.inverter} />
-        </div>
-
-        {/* Middle Right: Empty for flow arrows */}
-        <div className="xl:col-span-1 relative">
-          {/* Energy Flow Arrows */}
-          <div className="absolute inset-0">
-            {/* PV to Inverter flows */}
-            <AnimatedArrow 
-              direction="right" 
-              power={energyData.pv1.power + energyData.pv2.power} 
-              className="top-1/4 left-1/2 transform -translate-x-1/2"
-            />
-            
-            {/* Inverter to Battery */}
-            <AnimatedArrow 
-              direction="down" 
-              power={energyData.battery.power} 
-              className="top-1/2 left-1/4 transform -translate-x-1/2"
-            />
-            
-            {/* Inverter to Home */}
-            <AnimatedArrow 
-              direction="up" 
-              power={energyData.house.totalPower} 
-              className="top-3/4 left-3/4 transform -translate-x-1/2"
-            />
-            
-            {/* Grid interaction */}
-            <AnimatedArrow 
-              direction={energyData.grid.power > 0 ? "left" : "right"} 
-              power={energyData.grid.power} 
-              className="bottom-1/4 left-1/2 transform -translate-x-1/2"
-            />
-          </div>
-        </div>
+        {/* Bottom Center: Empty */}
+        <div className="xl:col-span-2"></div>
 
         {/* Bottom Right: Grid */}
         <div className="xl:col-span-1 xl:col-start-4">
