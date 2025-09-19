@@ -707,7 +707,7 @@ const EnergyFlowDashboard = () => {
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="col-span-2">
             <div className="text-muted-foreground">Power</div>
-            <div className="font-mono text-primary text-sm">{Math.abs(grid.power)}kW</div>
+            <div className="font-mono text-primary text-2xl">{Math.abs(grid.power)}kW</div>
           </div>
         </div>
         
