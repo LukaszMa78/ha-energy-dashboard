@@ -654,44 +654,31 @@ const EnergyFlowDashboard = () => {
       </header>
 
       {/* Main Grid Layout */}
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 relative">
+      <div className="space-y-4">
         
-        {/* Top Left: PV Systems and Battery */}
-        <div className="xl:col-span-1 space-y-4">
-          <PVSystemCard pv={energyData.pv1} />
-          <PVSystemCard pv={energyData.pv2} />
+        {/* Top Row: PV Systems, PV Panels, House Consumption */}
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-4">
+          {/* PV Systems */}
+          <div className="xl:col-span-1 space-y-4">
+            <PVSystemCard pv={energyData.pv1} />
+            <PVSystemCard pv={energyData.pv2} />
+          </div>
+
+          {/* PV Panels Array - Extended */}
+          <div className="xl:col-span-2">
+            <PVPanelsCard pvPanels={energyData.pvPanels} />
+          </div>
+
+          {/* House Consumption */}
+          <div className="xl:col-span-1">
+            <HouseConsumptionCard house={energyData.house} backupDevices={energyData.backupDevices} />
+          </div>
+        </div>
+
+        {/* Middle Row: Battery, Inverter, Grid in one line */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <BatteryCard battery={energyData.battery} />
-        </div>
-
-        {/* Top Middle: PV Panels Array */}
-        <div className="xl:col-span-2">
-          <PVPanelsCard pvPanels={energyData.pvPanels} />
-        </div>
-
-        {/* Top Right: House Consumption */}
-        <div className="xl:col-span-1">
-          <HouseConsumptionCard house={energyData.house} backupDevices={energyData.backupDevices} />
-        </div>
-
-        {/* Middle Left: Empty */}
-        <div className="xl:col-span-1"></div>
-
-        {/* Middle Center: Inverter */}
-        <div className="xl:col-span-2">
           <InverterCard inverter={energyData.inverter} />
-        </div>
-
-        {/* Middle Right: Empty */}
-        <div className="xl:col-span-1"></div>
-
-        {/* Bottom Left: Empty */}
-        <div className="xl:col-span-1"></div>
-
-        {/* Bottom Center: Empty */}
-        <div className="xl:col-span-2"></div>
-
-        {/* Bottom Right: Grid */}
-        <div className="xl:col-span-1 xl:col-start-4">
           <GridCard grid={energyData.grid} />
         </div>
       </div>
