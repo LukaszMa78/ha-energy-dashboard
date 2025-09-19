@@ -243,12 +243,17 @@ const EnergyFlowDashboard = () => {
       ]
     },
     pvPanels: {
-      totalProduced: 47.7, // Total energy produced today
-      currentPower: 7.3, // Combined current power from all panels
-      voltage: 385,
-      current: 18.9,
-      panelsActive: 28, // Number of panels currently producing
-      totalPanels: 30, // Default 30 panels, configurable
+      totalProduced: 47.7,
+      currentPower: 7.3,
+      totalPanels: 30,
+      panels: Array.from({ length: 30 }, (_, i) => ({
+        name: `Panel ${String(i + 1).padStart(2, '0')}`,
+        energyToday: (Math.random() * 2 + 0.5).toFixed(1), // Random energy 0.5-2.5 kWh
+        power: Math.random() > 0.1 ? (Math.random() * 0.4 + 0.1).toFixed(2) : '0.00', // 90% active
+        voltage: Math.random() > 0.1 ? (380 + Math.random() * 10).toFixed(0) : '0',
+        current: Math.random() > 0.1 ? (Math.random() * 2 + 0.5).toFixed(1) : '0.0',
+        active: Math.random() > 0.1
+      }))
     }
   };
 
@@ -476,65 +481,60 @@ const EnergyFlowDashboard = () => {
     );
   };
 
-  const PVPanelsCard = ({ pvPanels }) => (
-    <Card className="bg-gradient-card border-primary/20">
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <Sun className="w-4 h-4 text-primary" />
-          PV Panel Array
-          <Badge className="ml-auto">{pvPanels.panelsActive}/{pvPanels.totalPanels}</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Solar Panel Visualization */}
-        <div className="bg-muted/30 rounded-lg p-4 border border-primary/20">
-          <div className="grid grid-cols-6 gap-1 mb-3">
-            {Array.from({ length: 30 }, (_, i) => (
-              <div
-                key={i}
-                className={`aspect-square rounded-sm border ${
-                  i < pvPanels.panelsActive
-                    ? 'bg-gradient-to-br from-primary/60 to-primary/40 border-primary/40'
-                    : 'bg-muted border-muted-foreground/20'
-                }`}
-              />
+  const PVPanelsCard = ({ pvPanels }) => {
+    const activePanels = pvPanels.panels.filter(panel => panel.active).length;
+    
+    return (
+      <Card className="bg-gradient-card border-primary/20">
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-sm">
+            <Sun className="w-4 h-4 text-primary" />
+            PV Panel Array
+            <Badge className="ml-auto">{activePanels}/{pvPanels.totalPanels}</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {/* Panel List */}
+          <div className="max-h-48 overflow-y-auto space-y-1">
+            {pvPanels.panels.map((panel, i) => (
+              <div key={i} className={`flex items-center justify-between p-2 rounded text-xs border ${
+                panel.active 
+                  ? 'bg-primary/5 border-primary/20' 
+                  : 'bg-muted/50 border-muted-foreground/20 opacity-60'
+              }`}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className={`w-2 h-2 rounded-full ${
+                    panel.active ? 'bg-primary' : 'bg-muted-foreground'
+                  }`} />
+                  <span className="font-medium">{panel.name}</span>
+                </div>
+                <div className="flex items-center gap-3 font-mono text-xs">
+                  <span>{panel.energyToday}kWh</span>
+                  <span className="text-primary">{panel.power}kW</span>
+                  <span>{panel.voltage}V</span>
+                  <span>{panel.current}A</span>
+                </div>
+              </div>
             ))}
           </div>
-          <div className="text-center">
-            <div className="text-xs text-muted-foreground">
-              {pvPanels.totalPanels} panels • {((pvPanels.panelsActive / pvPanels.totalPanels) * 100).toFixed(0)}% active
+
+          <Separator />
+
+          {/* Summary */}
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <div className="text-muted-foreground">Total Today</div>
+              <div className="font-mono text-primary font-bold">{pvPanels.totalProduced}kWh</div>
+            </div>
+            <div>
+              <div className="text-muted-foreground">Total Power</div>
+              <div className="font-mono text-primary font-bold">{pvPanels.currentPower}kW</div>
             </div>
           </div>
-        </div>
-
-        {/* Power Metrics */}
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <div className="text-muted-foreground">Total Produced</div>
-            <div className="font-mono text-primary text-lg font-bold">{pvPanels.totalProduced}kWh</div>
-          </div>
-          <div>
-            <div className="text-muted-foreground">Current Power</div>
-            <div className="font-mono text-primary text-lg font-bold">{pvPanels.currentPower}kW</div>
-          </div>
-        </div>
-
-        <Separator />
-
-        {/* Electrical Details */}
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <div className="text-muted-foreground">Voltage</div>
-            <div className="font-mono text-sm">{pvPanels.voltage}V</div>
-          </div>
-          <div>
-            <div className="text-muted-foreground">Current</div>
-            <div className="font-mono text-sm">{pvPanels.current}A</div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
+        </CardContent>
+      </Card>
+    );
+  };
 
   const HouseConsumptionCard = ({ house, backupDevices }) => (
     <Card className="h-fit">
