@@ -11,4 +11,4 @@ addons:
   energy-dashboard:
     repository: "https://github.com/LukaszMa78/ha-energy-dashboard"
     target: energy-dashboard
-    image: "ghcr.io/LukaszMa78/ha-energy-dashboard/{arch}"
+    image: "ghcr.io/lukaszma78/ha-energy-dashboard/{arch}"
