@@ -62,8 +62,6 @@ schema:
     inverter_temperature: "str?"
     inverter_ac_phases: ["str"]
     house_total_power: "str"
-    house_rooms:
-      - name: "str"
-        entities: ["str"]
+    house_rooms: ["str"]
 
 image: "ghcr.io/lukaszma78/ha-energy-dashboard/{arch}"
