@@ -27,7 +27,7 @@ import {
   Activity,
   Gauge
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
 const EnergyFlowDashboard = () => {
   const [expandedFloors, setExpandedFloors] = useState<number[]>([]);
@@ -65,24 +65,52 @@ const EnergyFlowDashboard = () => {
       cycles: 1247,
       dailyLevels: [
         { time: '00:00', level: 45 },
-        { time: '01:00', level: 42 },
-        { time: '02:00', level: 40 },
-        { time: '03:00', level: 38 },
-        { time: '04:00', level: 36 },
-        { time: '05:00', level: 34 },
+        { time: '00:05', level: 44 },
+        { time: '00:10', level: 44 },
+        { time: '00:15', level: 43 },
+        { time: '00:20', level: 43 },
+        { time: '00:25', level: 42 },
+        { time: '00:30', level: 42 },
+        { time: '00:35', level: 41 },
+        { time: '00:40', level: 41 },
+        { time: '00:45', level: 40 },
+        { time: '00:50', level: 40 },
+        { time: '00:55', level: 39 },
+        { time: '01:00', level: 39 },
+        { time: '01:30', level: 37 },
+        { time: '02:00', level: 36 },
+        { time: '02:30', level: 35 },
+        { time: '03:00', level: 34 },
+        { time: '03:30', level: 33 },
+        { time: '04:00', level: 32 },
+        { time: '04:30', level: 31 },
+        { time: '05:00', level: 30 },
+        { time: '05:30', level: 30 },
         { time: '06:00', level: 32 },
-        { time: '07:00', level: 35 },
-        { time: '08:00', level: 42 },
-        { time: '09:00', level: 58 },
-        { time: '10:00', level: 72 },
-        { time: '11:00', level: 85 },
-        { time: '12:00', level: 95 },
-        { time: '13:00', level: 98 },
-        { time: '14:00', level: 95 },
-        { time: '15:00', level: 90 },
-        { time: '16:00', level: 85 },
-        { time: '17:00', level: 82 },
-        { time: '18:00', level: 78 }
+        { time: '06:30', level: 35 },
+        { time: '07:00', level: 42 },
+        { time: '07:30', level: 48 },
+        { time: '08:00', level: 58 },
+        { time: '08:30', level: 65 },
+        { time: '09:00', level: 72 },
+        { time: '09:30', level: 78 },
+        { time: '10:00', level: 85 },
+        { time: '10:30', level: 90 },
+        { time: '11:00', level: 95 },
+        { time: '11:30', level: 98 },
+        { time: '12:00', level: 98 },
+        { time: '12:30', level: 97 },
+        { time: '13:00', level: 95 },
+        { time: '13:30', level: 92 },
+        { time: '14:00', level: 90 },
+        { time: '14:30', level: 87 },
+        { time: '15:00', level: 85 },
+        { time: '15:30', level: 84 },
+        { time: '16:00', level: 82 },
+        { time: '16:30', level: 80 },
+        { time: '17:00', level: 78 },
+        { time: '17:30', level: 77 },
+        { time: '18:00', level: 76 }
       ]
     },
     grid: { 
@@ -405,6 +433,21 @@ const EnergyFlowDashboard = () => {
                   interval="preserveStartEnd"
                 />
                 <YAxis hide />
+                <Tooltip
+                  content={({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                      return (
+                        <div className="bg-popover border rounded-lg px-3 py-2 shadow-lg">
+                          <p className="text-xs text-muted-foreground">{`Time: ${label}`}</p>
+                          <p className="text-xs font-medium text-primary">
+                            {`Level: ${payload[0].value}%`}
+                          </p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
                 <Line 
                   type="monotone" 
                   dataKey="level" 
