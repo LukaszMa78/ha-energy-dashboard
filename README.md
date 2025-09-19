@@ -1,58 +1,121 @@
-# Welcome to your Lovable project
+# Energy Flow Dashboard - Home Assistant Add-on
 
-## Project info
+A beautiful, real-time energy monitoring dashboard for Home Assistant that visualizes your solar panels, battery storage, grid connection, and household energy consumption.
 
-**URL**: https://lovable.dev/projects/344aba88-e2f0-4697-926b-68c0a7d9440c
+## About
 
-## How can I edit this code?
+This add-on provides a comprehensive energy monitoring interface that connects to your Home Assistant instance to display:
 
-There are several ways of editing your application.
+- **Solar Panel Monitoring**: Individual panel performance with energy, power, voltage, and current data
+- **Battery Storage**: Real-time battery status, state of charge, and historical data
+- **Grid Connection**: Import/export status with financial tracking
+- **Inverter Monitoring**: Multi-phase power measurements and efficiency metrics
+- **House Consumption**: Room-by-room energy usage breakdown
+- **Backup Devices**: UPS and generator status monitoring
 
-**Use Lovable**
+## Installation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/344aba88-e2f0-4697-926b-68c0a7d9440c) and start prompting.
+1. Add this repository to your Home Assistant add-on store
+2. Install the "Energy Flow Dashboard" add-on
+3. Configure your Home Assistant entities in the add-on configuration
+4. Start the add-on
+5. Access the dashboard through the Web UI
 
-Changes made via Lovable will be committed automatically to this repo.
+## Configuration
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```yaml
+supervisor_api: true
+homeassistant_api: true
+host_network: true
+entities:
+  # Solar Panel Entities (configure up to 30 panels)
+  solar_panels:
+    - sensor.solar_panel_01_power
+    - sensor.solar_panel_01_voltage
+    - sensor.solar_panel_01_current
+    - sensor.solar_panel_01_energy_today
+  
+  # Battery Entities
+  battery:
+    power: sensor.battery_power
+    soc: sensor.battery_soc
+    voltage: sensor.battery_voltage
+    current: sensor.battery_current
+  
+  # Grid Entities
+  grid:
+    power: sensor.grid_power
+    import_today: sensor.grid_import_today
+    export_today: sensor.grid_export_today
+  
+  # Inverter Entities
+  inverter:
+    power: sensor.inverter_power
+    efficiency: sensor.inverter_efficiency
+    temperature: sensor.inverter_temperature
+    
+  # House Consumption Entities (by room)
+  consumption:
+    living_room: sensor.living_room_power
+    kitchen: sensor.kitchen_power
+    bedroom_1: sensor.bedroom_1_power
+    # Add more rooms as needed
 ```
 
-**Edit a file directly in GitHub**
+## Features
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 🌞 Solar Panel Monitoring
+- Individual panel performance tracking
+- Real-time power, voltage, and current measurements
+- Daily energy production per panel
+- Active/inactive panel status
+- Scrollable panel list with hidden scrollbars
 
-**Use GitHub Codespaces**
+### 🔋 Battery Management
+- State of charge visualization
+- Power flow (charging/discharging)
+- Historical performance charts
+- Battery health indicators
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### ⚡ Grid Connection
+- Import/export status with color coding
+- Daily/monthly energy statistics
+- Cost tracking and financial overview
+- Real-time power flow visualization
 
-## What technologies are used for this project?
+### 🏠 Smart Home Integration
+- Room-by-room consumption breakdown
+- Device-level monitoring
+- Expandable floor and room views
+- Real-time device status
 
-This project is built with:
+### 📊 Advanced Analytics
+- Historical data visualization
+- Energy forecasting
+- Efficiency metrics
+- Performance trends
+
+## API Integration
+
+The add-on connects to Home Assistant's API to fetch real-time data from your configured entities. It supports:
+
+- WebSocket connections for real-time updates
+- RESTful API integration
+- Automatic entity discovery
+- Configurable update intervals
+
+## Supported Hardware
+
+This add-on works with any Home Assistant compatible energy monitoring hardware:
+
+- Solar inverters (SolarEdge, Fronius, Huawei, etc.)
+- Battery systems (Tesla Powerwall, LG Chem, Pylontech, etc.)
+- Smart meters and energy monitors
+- Individual smart plugs and switches
+
+## Development
+
+This project was built with Lovable and synced to GitHub. The dashboard is built using:
 
 - Vite
 - TypeScript
@@ -60,14 +123,35 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+### Local Development
 
-Simply open [Lovable](https://lovable.dev/projects/344aba88-e2f0-4697-926b-68c0a7d9440c) and click on Share -> Publish.
+```sh
+# Clone the repository
+git clone https://github.com/yourusername/ha-energy-dashboard.git
 
-## Can I connect a custom domain to my Lovable project?
+# Navigate to the project directory
+cd ha-energy-dashboard
 
-Yes, you can!
+# Install dependencies
+npm i
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+# Start the development server
+npm run dev
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Support
+
+For support and feature requests, please visit the [GitHub repository](https://github.com/yourusername/ha-energy-dashboard) or the [Home Assistant Community Forum](https://community.home-assistant.io/).
+
+## Changelog
+
+### v1.0.0
+- Initial release
+- Complete energy monitoring dashboard
+- Home Assistant API integration
+- Responsive design with dark/light mode support
+- Real-time data updates
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
