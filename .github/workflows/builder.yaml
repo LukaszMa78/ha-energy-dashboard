@@ -49,9 +49,10 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "addons=[]" >> $GITHUB_OUTPUT
           else
-            changed=$(printf "%s\n" "${changed_addons[@]}" | jq -R . | jq -s .)
+            # Properly format JSON array
+            json_array=$(printf '"%s"\n' "${changed_addons[@]}" | jq -s .)
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "addons=${changed}" >> $GITHUB_OUTPUT
+            echo "addons=${json_array}" >> $GITHUB_OUTPUT
           fi
 
   build:
