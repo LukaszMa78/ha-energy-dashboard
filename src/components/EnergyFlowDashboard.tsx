@@ -65,9 +65,9 @@ const EnergyFlowDashboard = () => {
     },
     grid: { 
       power: 2.1, 
-      voltage: 230, 
-      current: 9.1, 
-      frequency: 50.0,
+      voltage: { phase1: 229.8, phase2: 230.2, phase3: 229.9 },
+      current: { phase1: 9.1, phase2: 8.8, phase3: 9.3 },
+      frequency: { phase1: 50.02, phase2: 49.98, phase3: 50.01 },
       imported: 5.2, 
       exported: 12.3,
       cost: 0.24,
@@ -410,23 +410,38 @@ const EnergyFlowDashboard = () => {
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
+          <div className="col-span-2">
             <div className="text-muted-foreground">Power</div>
             <div className="font-mono text-primary text-sm">{Math.abs(grid.power)}kW</div>
           </div>
-          <div>
-            <div className="text-muted-foreground">Frequency</div>
-            <div className="font-mono text-sm">{grid.frequency}Hz</div>
-          </div>
-          <div>
-            <div className="text-muted-foreground">Voltage</div>
-            <div className="font-mono text-sm">{grid.voltage}V</div>
-          </div>
-          <div>
-            <div className="text-muted-foreground">Current</div>
-            <div className="font-mono text-sm">{grid.current}A</div>
+        </div>
+        
+        {/* Three-phase measurements */}
+        <div className="space-y-2">
+          <div className="text-xs font-medium text-muted-foreground">Phase Measurements</div>
+          <div className="grid grid-cols-4 gap-2 text-xs">
+            <div className="text-muted-foreground font-medium">Phase</div>
+            <div className="text-muted-foreground font-medium">Frequency</div>
+            <div className="text-muted-foreground font-medium">Voltage</div>
+            <div className="text-muted-foreground font-medium">Current</div>
+            
+            <div className="text-muted-foreground">L1</div>
+            <div className="font-mono text-sm">{grid.frequency.phase1}Hz</div>
+            <div className="font-mono text-sm">{grid.voltage.phase1}V</div>
+            <div className="font-mono text-sm">{grid.current.phase1}A</div>
+            
+            <div className="text-muted-foreground">L2</div>
+            <div className="font-mono text-sm">{grid.frequency.phase2}Hz</div>
+            <div className="font-mono text-sm">{grid.voltage.phase2}V</div>
+            <div className="font-mono text-sm">{grid.current.phase2}A</div>
+            
+            <div className="text-muted-foreground">L3</div>
+            <div className="font-mono text-sm">{grid.frequency.phase3}Hz</div>
+            <div className="font-mono text-sm">{grid.voltage.phase3}V</div>
+            <div className="font-mono text-sm">{grid.current.phase3}A</div>
           </div>
         </div>
+        
         <Separator />
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div>
