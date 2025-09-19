@@ -475,8 +475,8 @@ const EnergyFlowDashboard = () => {
         { day: 'Saturday', value: 47.3 }
       ],
       currentPower: 7.3,
-      totalPanels: 30,
-      panels: Array.from({ length: 30 }, (_, i) => ({
+      totalPanels: 7,
+      panels: Array.from({ length: 7 }, (_, i) => ({
         name: `Panel ${String(i + 1).padStart(2, '0')}`,
         energyToday: (Math.random() * 2 + 0.5).toFixed(1), // Random energy 0.5-2.5 kWh
         power: Math.random() > 0.1 ? (Math.random() * 0.4 + 0.1).toFixed(2) : '0.00', // 90% active
@@ -805,7 +805,7 @@ const EnergyFlowDashboard = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           {/* Panel List */}
-          <div className="max-h-60 overflow-y-auto space-y-1">
+          <div className="max-h-80 overflow-y-auto space-y-1">
             {pvPanels.panels.map((panel, i) => (
               <div key={i} className={`flex items-center justify-between p-2 rounded text-xs border ${
                 panel.active 
