@@ -1353,7 +1353,7 @@ const EnergyFlowDashboard = () => {
   };
 
   const HouseConsumptionCard = ({ house, backupDevices }) => (
-    <Card className="h-fit">
+    <Card className="bg-gradient-card border-primary/20 h-fit">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Home className="w-4 h-4 text-primary" />
@@ -1363,7 +1363,7 @@ const EnergyFlowDashboard = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* House floors */}
-        <div className="space-y-2">
+        <div className="max-h-96 overflow-y-auto space-y-2">
           {house.floors.map((floor, floorIdx) => {
             const floorId = `floor-${floorIdx}`;
             const isExpanded = expandedFloors.includes(floorIdx);
