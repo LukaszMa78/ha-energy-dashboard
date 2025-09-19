@@ -967,12 +967,6 @@ const EnergyFlowDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-background p-4">
-      <header className="mb-6">
-        <h1 className="text-3xl font-bold text-primary mb-2">Home Assistant Energy Dashboard</h1>
-        <p className="text-muted-foreground">Real-time energy monitoring with comprehensive device tracking</p>
-      </header>
-
-      {/* Main Grid Layout */}
       <div className="space-y-4">
         
         {/* Top Row: PV Systems, PV Panels, House Consumption */}
