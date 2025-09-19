@@ -27,6 +27,7 @@ import {
   Activity,
   Gauge
 } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 const EnergyFlowDashboard = () => {
   const [expandedFloors, setExpandedFloors] = useState<number[]>([]);
@@ -61,7 +62,28 @@ const EnergyFlowDashboard = () => {
       timeToFull: "2h 15m",
       timeToEmpty: "8h 42m",
       temperature: 22.5,
-      cycles: 1247
+      cycles: 1247,
+      dailyLevels: [
+        { time: '00:00', level: 45 },
+        { time: '01:00', level: 42 },
+        { time: '02:00', level: 40 },
+        { time: '03:00', level: 38 },
+        { time: '04:00', level: 36 },
+        { time: '05:00', level: 34 },
+        { time: '06:00', level: 32 },
+        { time: '07:00', level: 35 },
+        { time: '08:00', level: 42 },
+        { time: '09:00', level: 58 },
+        { time: '10:00', level: 72 },
+        { time: '11:00', level: 85 },
+        { time: '12:00', level: 95 },
+        { time: '13:00', level: 98 },
+        { time: '14:00', level: 95 },
+        { time: '15:00', level: 90 },
+        { time: '16:00', level: 85 },
+        { time: '17:00', level: 82 },
+        { time: '18:00', level: 78 }
+      ]
     },
     grid: { 
       power: 2.1, 
@@ -367,6 +389,33 @@ const EnergyFlowDashboard = () => {
             <span className="text-muted-foreground">{battery.capacity}kWh</span>
           </div>
           <Progress value={battery.soc} className="h-2" />
+        </div>
+        
+        {/* Battery Level Chart */}
+        <div className="space-y-2">
+          <div className="text-xs text-muted-foreground">Battery Level Today</div>
+          <div className="h-16 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={battery.dailyLevels}>
+                <XAxis 
+                  dataKey="time" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                  interval="preserveStartEnd"
+                />
+                <YAxis hide />
+                <Line 
+                  type="monotone" 
+                  dataKey="level" 
+                  stroke="hsl(var(--primary))" 
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 3, fill: 'hsl(var(--primary))' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </CardContent>
     </Card>
