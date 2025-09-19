@@ -737,7 +737,7 @@ const EnergyFlowDashboard = () => {
                 <div className="text-sm text-muted-foreground">Self-sufficiency</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">€12.80</div>
+                <div className="text-2xl font-bold text-primary">52.40 PLN</div>
                 <div className="text-sm text-muted-foreground">Daily Savings</div>
               </div>
             </div>
