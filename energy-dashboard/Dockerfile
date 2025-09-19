@@ -27,7 +27,7 @@ RUN npm install -g serve
 EXPOSE 8080
 
 # Copy run script
-COPY energy-dashboard/run.sh /
+COPY run.sh /
 RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
