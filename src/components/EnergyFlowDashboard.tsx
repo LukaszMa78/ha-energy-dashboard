@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { 
   Sun, 
   Zap, 
@@ -25,13 +27,53 @@ import {
   Building,
   Cpu,
   Activity,
-  Gauge
+  Gauge,
+  CalendarIcon
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear, isWithinInterval } from 'date-fns';
 
 const EnergyFlowDashboard = () => {
   const [expandedFloors, setExpandedFloors] = useState<number[]>([]);
   const [expandedRooms, setExpandedRooms] = useState<string[]>([]);
+  const [dateRange, setDateRange] = useState<{from: Date, to: Date}>({
+    from: new Date(),
+    to: new Date()
+  });
+  const [datePreset, setDatePreset] = useState<string>('today');
+
+  // Date range helper functions
+  const getDateRangeData = (preset: string) => {
+    const today = new Date();
+    switch (preset) {
+      case 'today':
+        return { from: today, to: today };
+      case 'week':
+        return { from: startOfWeek(today, { weekStartsOn: 1 }), to: endOfWeek(today, { weekStartsOn: 1 }) };
+      case 'month':
+        return { from: startOfMonth(today), to: endOfMonth(today) };
+      case 'year':
+        return { from: startOfYear(today), to: endOfYear(today) };
+      default:
+        return { from: today, to: today };
+    }
+  };
+
+  const handlePresetChange = (preset: string) => {
+    setDatePreset(preset);
+    setDateRange(getDateRangeData(preset));
+  };
+
+  // Calculate totals based on date range (mock multipliers for demo)
+  const calculateRangeMultiplier = () => {
+    switch (datePreset) {
+      case 'today': return 1;
+      case 'week': return 7;
+      case 'month': return 30;
+      case 'year': return 365;
+      default: return 1;
+    }
+  };
 
   // Mock data - replace with Home Assistant entity IDs
   const energyData = {
@@ -1453,38 +1495,97 @@ const EnergyFlowDashboard = () => {
       <div className="mb-6">
         <Card className="bg-gradient-card border-primary/20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Gauge className="w-5 h-5 text-primary" />
-              Daily Energy Summary
+            <CardTitle className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Gauge className="w-5 h-5 text-primary" />
+                {datePreset === 'today' ? 'Daily Energy Summary' : 
+                 datePreset === 'week' ? 'Weekly Energy Summary' :
+                 datePreset === 'month' ? 'Monthly Energy Summary' :
+                 'Yearly Energy Summary'}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1">
+                  <Button
+                    variant={datePreset === 'today' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handlePresetChange('today')}
+                  >
+                    Today
+                  </Button>
+                  <Button
+                    variant={datePreset === 'week' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handlePresetChange('week')}
+                  >
+                    This Week
+                  </Button>
+                  <Button
+                    variant={datePreset === 'month' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handlePresetChange('month')}
+                  >
+                    This Month
+                  </Button>
+                  <Button
+                    variant={datePreset === 'year' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handlePresetChange('year')}
+                  >
+                    This Year
+                  </Button>
+                </div>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <CalendarIcon className="w-4 h-4 mr-2" />
+                      {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd')}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="end">
+                    <Calendar
+                      mode="range"
+                      selected={{from: dateRange.from, to: dateRange.to}}
+                      onSelect={(range) => {
+                        if (range?.from && range?.to) {
+                          setDateRange({from: range.from, to: range.to});
+                          setDatePreset('custom');
+                        }
+                      }}
+                      numberOfMonths={2}
+                      className="p-3 pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-6 gap-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">
-                  {(energyData.pv1.production + energyData.pv2.production).toFixed(1)}kWh
+                  {((energyData.pv1.production + energyData.pv2.production) * calculateRangeMultiplier()).toFixed(1)}kWh
                 </div>
                 <div className="text-sm text-muted-foreground">Generated</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">32.5kWh</div>
+                <div className="text-2xl font-bold text-primary">{(32.5 * calculateRangeMultiplier()).toFixed(1)}kWh</div>
                 <div className="text-sm text-muted-foreground">Consumed</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{energyData.grid.imported}kWh</div>
-                <div className="text-sm text-muted-foreground">Imported Today</div>
+                <div className="text-2xl font-bold text-primary">{(energyData.grid.imported * calculateRangeMultiplier()).toFixed(1)}kWh</div>
+                <div className="text-sm text-muted-foreground">Imported</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{energyData.grid.exported}kWh</div>
-                <div className="text-sm text-muted-foreground">Exported Today</div>
+                <div className="text-2xl font-bold text-primary">{(energyData.grid.exported * calculateRangeMultiplier()).toFixed(1)}kWh</div>
+                <div className="text-sm text-muted-foreground">Exported</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">74%</div>
                 <div className="text-sm text-muted-foreground">Self-sufficiency</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">52.40 PLN</div>
-                <div className="text-sm text-muted-foreground">Daily Savings</div>
+                <div className="text-2xl font-bold text-primary">{(52.40 * calculateRangeMultiplier()).toFixed(2)} PLN</div>
+                <div className="text-sm text-muted-foreground">Savings</div>
               </div>
             </div>
           </CardContent>
