@@ -1175,7 +1175,7 @@ const EnergyFlowDashboard = () => {
   );
 
   const GridCard = ({ grid }) => (
-    <Card>
+    <Card className={grid.power > 0 ? "bg-red-500/10 border-red-500/20" : "bg-green-500/10 border-green-500/20"}>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Plug className="w-4 h-4 text-primary" />
@@ -1189,7 +1189,7 @@ const EnergyFlowDashboard = () => {
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="col-span-2">
             <div className="text-muted-foreground">Power</div>
-            <div className="font-mono text-primary text-2xl">{Math.abs(grid.power)}kW</div>
+            <div className={`font-mono text-primary ${grid.power > 0 ? 'text-4xl' : 'text-2xl'}`}>{Math.abs(grid.power)}kW</div>
           </div>
         </div>
         
