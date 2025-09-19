@@ -1025,7 +1025,7 @@ const EnergyFlowDashboard = () => {
   );
 
   const BatteryCard = ({ battery }) => (
-    <Card>
+    <Card className={battery.power <= 0 ? "bg-red-500/10 border-red-500/20" : "bg-green-500/10 border-green-500/20"}>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Battery className="w-4 h-4 text-primary" />
@@ -1039,7 +1039,7 @@ const EnergyFlowDashboard = () => {
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div>
             <div className="text-muted-foreground">Power</div>
-            <div className="font-mono text-primary text-sm">{Math.abs(battery.power)}kW</div>
+            <div className={`font-mono text-primary ${battery.power <= 0 ? 'text-4xl' : 'text-sm'}`}>{Math.abs(battery.power)}kW</div>
           </div>
           <div>
             <div className="text-muted-foreground">SOC</div>
