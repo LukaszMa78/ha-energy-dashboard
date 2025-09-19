@@ -1369,13 +1369,13 @@ const EnergyFlowDashboard = () => {
                   </span>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="grid grid-cols-4 gap-2 text-xs">
                   <div className="space-y-1">
-                    <div className="text-muted-foreground font-medium">Energy Today</div>
+                    <div className="text-muted-foreground font-medium">Energy</div>
                     <div className="font-mono text-primary font-bold">{panel.energyToday} kWh</div>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-muted-foreground font-medium">Current Power</div>
+                    <div className="text-muted-foreground font-medium">Power</div>
                     <div className="font-mono text-primary font-bold">{panel.power} kW</div>
                   </div>
                   <div className="space-y-1">
