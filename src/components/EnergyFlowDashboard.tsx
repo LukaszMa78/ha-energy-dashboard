@@ -83,9 +83,9 @@ const EnergyFlowDashboard = () => {
       frequency: { phase1: 50.01, phase2: 49.99, phase3: 50.02 }
     },
     backupDevices: [
-      { name: 'Induction Hob', power: 2.1, voltage: 230, current: 9.1, energyToday: 8.4, icon: Zap, status: 'active' },
-      { name: 'Wallbox', power: 7.2, voltage: 400, current: 10.4, energyToday: 28.6, icon: Car, status: 'charging' },
-      { name: 'Heat Pump', power: 3.8, voltage: 400, current: 5.5, energyToday: 15.2, icon: Thermometer, status: 'heating' }
+      { name: 'Induction Hob', power: 2.1, voltage: 230, current: 9.1, icon: Zap, status: 'active' },
+      { name: 'Wallbox', power: 7.2, voltage: 400, current: 10.4, icon: Car, status: 'charging' },
+      { name: 'Heat Pump', power: 3.8, voltage: 400, current: 5.5, icon: Thermometer, status: 'heating' }
     ],
     house: {
       totalPower: 15.2,
@@ -517,7 +517,6 @@ const EnergyFlowDashboard = () => {
               </div>
               <div className="text-right">
                 <div className="font-mono text-sm text-primary">{device.power}kW</div>
-                <div className="text-xs text-muted-foreground mb-1">Today: {device.energyToday}kWh</div>
                 <Badge variant="outline" className="text-xs">
                   {device.status}
                 </Badge>
