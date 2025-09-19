@@ -15,7 +15,12 @@ COPY bun.lockb* ./
 RUN npm install
 
 # Copy source code
-COPY . .
+COPY src ./src
+COPY public ./public
+COPY index.html ./
+COPY vite.config.ts ./
+COPY tailwind.config.ts ./
+COPY tsconfig*.json ./
 
 # Build the React app
 RUN npm run build
@@ -27,7 +32,7 @@ RUN npm install -g serve
 EXPOSE 8080
 
 # Copy run script
-COPY run.sh /
+COPY energy-dashboard/run.sh /
 RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
