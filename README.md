@@ -127,7 +127,7 @@ This project was built with Lovable and synced to GitHub. The dashboard is built
 
 ```sh
 # Clone the repository
-git clone https://github.com/yourusername/ha-energy-dashboard.git
+git clone https://github.com/LukaszMa78/ha-energy-dashboard.git
 
 # Navigate to the project directory
 cd ha-energy-dashboard
@@ -141,7 +141,7 @@ npm run dev
 
 ## Support
 
-For support and feature requests, please visit the [GitHub repository](https://github.com/yourusername/ha-energy-dashboard) or the [Home Assistant Community Forum](https://community.home-assistant.io/).
+For support and feature requests, please visit the [GitHub repository](https://github.com/LukaszMa78/ha-energy-dashboard) or the [Home Assistant Community Forum](https://community.home-assistant.io/).
 
 ## Changelog
 

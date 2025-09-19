@@ -12,7 +12,7 @@ labels:
   io.hass.type: "addon"
   io.hass.version: "1.0.0"
   maintainer: "Energy Dashboard Team"
-  io.hass.url: "https://github.com/yourusername/ha-energy-dashboard"
+  io.hass.url: "https://github.com/LukaszMa78/ha-energy-dashboard"
 
 args:
   TEMPIO_VERSION: "2021.09.0"
