@@ -1,7 +1,7 @@
 name: Builder
 
 env:
-  BUILD_ARGS: "--test"
+  BUILD_ARGS: ""
   MONITORED_FILES: "build.yaml config.yaml Dockerfile rootfs"
 
 on:
@@ -81,4 +81,5 @@ jobs:
             --target /data/${{ matrix.addon }} \
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
-            --addon
+            --addon \
+            --no-cache
