@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bashio
 
-# Start the React app
+# Start the energy dashboard
 cd /app
-serve -s dist -l 8080
+serve -s . -l 8080
