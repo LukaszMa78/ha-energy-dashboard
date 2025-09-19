@@ -275,85 +275,38 @@ const EnergyFlowDashboard = () => {
   };
 
   const PVSystemCard = ({ pv, className = "" }) => (
-    <Card className={`${className} h-full`}>
+    <Card className={className}>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Sun className="w-4 h-4 text-primary" />
           {pv.name}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 h-full flex flex-col">
-        <div className="text-center">
-          <div className="font-mono text-3xl text-primary">{pv.power}kW</div>
-          <div className="text-xs text-muted-foreground">Current Power</div>
-        </div>
-        
+      <CardContent className="space-y-3">
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div>
-            <div className="text-muted-foreground">Max Power</div>
-            <div className="font-mono text-sm">{pv.maxPower}kW</div>
+            <div className="text-muted-foreground">Power</div>
+            <div className="font-mono text-primary text-sm">{pv.power}kW</div>
           </div>
           <div>
             <div className="text-muted-foreground">Efficiency</div>
-            <div className="font-mono text-sm">{pv.efficiency}%</div>
+            <div className="font-mono text-sm">{((pv.power / pv.maxPower) * 100).toFixed(1)}%</div>
           </div>
           <div>
-            <div className="text-muted-foreground">DC Voltage</div>
+            <div className="text-muted-foreground">Voltage</div>
             <div className="font-mono text-sm">{pv.voltage}V</div>
           </div>
           <div>
-            <div className="text-muted-foreground">DC Current</div>
+            <div className="text-muted-foreground">Current</div>
             <div className="font-mono text-sm">{pv.current}A</div>
           </div>
         </div>
-        
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground">Today's Production</span>
-            <span className="font-mono text-primary">{pv.production}kWh</span>
+        <div>
+          <div className="flex justify-between text-xs mb-1">
+            <span className="text-muted-foreground">Today: {pv.production}kWh</span>
+            <span className="text-muted-foreground">Max: {pv.maxPower}kW</span>
           </div>
-          <Progress value={(pv.power / pv.maxPower) * 100} className="h-3" />
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>0kW</span>
-            <span>{pv.maxPower}kW</span>
-          </div>
-        </div>
-        
-        <Separator />
-        
-        <div className="space-y-3 flex-1">
-          <div className="text-xs font-medium text-muted-foreground">Performance Metrics</div>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-muted-foreground">Power Factor</span>
-              <span className="font-mono text-xs">0.98</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-muted-foreground">Panel Temperature</span>
-              <span className="font-mono text-xs">42.5°C</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-muted-foreground">Irradiance</span>
-              <span className="font-mono text-xs">850 W/m²</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-muted-foreground">Monthly Total</span>
-              <span className="font-mono text-xs">285.4kWh</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-muted-foreground">Yearly Total</span>
-              <span className="font-mono text-xs">3.2MWh</span>
-            </div>
-          </div>
-        </div>
-        
-        <div className="mt-auto">
-          <Badge 
-            variant={pv.power > pv.maxPower * 0.7 ? "default" : pv.power > pv.maxPower * 0.3 ? "secondary" : "outline"} 
-            className="w-full justify-center"
-          >
-            {pv.power > pv.maxPower * 0.7 ? 'Optimal' : pv.power > pv.maxPower * 0.3 ? 'Good' : 'Low'} Performance
-          </Badge>
+          <Progress value={(pv.power / pv.maxPower) * 100} className="h-2" />
         </div>
       </CardContent>
     </Card>
