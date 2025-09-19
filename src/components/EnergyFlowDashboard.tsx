@@ -246,6 +246,14 @@ const EnergyFlowDashboard = () => {
     pvPanels: {
       totalProduced: 47.7,
       forecastToday: 52.3,
+      forecastUpcoming: [
+        { day: 'Tomorrow', value: 48.7 },
+        { day: 'Tuesday', value: 51.2 },
+        { day: 'Wednesday', value: 49.8 },
+        { day: 'Thursday', value: 53.1 },
+        { day: 'Friday', value: 50.9 },
+        { day: 'Saturday', value: 47.3 }
+      ],
       currentPower: 7.3,
       totalPanels: 30,
       panels: Array.from({ length: 30 }, (_, i) => ({
@@ -560,18 +568,33 @@ const EnergyFlowDashboard = () => {
           <Separator />
 
           {/* Summary */}
-          <div className="grid grid-cols-3 gap-3 text-xs">
-            <div>
-              <div className="text-muted-foreground">Total Today</div>
-              <div className="font-mono text-primary font-bold">{pvPanels.totalProduced}kWh</div>
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <div className="text-muted-foreground">Total Today</div>
+                <div className="font-mono text-primary font-bold">{pvPanels.totalProduced}kWh</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground">Total Power</div>
+                <div className="font-mono text-primary font-bold">{pvPanels.currentPower}kW</div>
+              </div>
             </div>
+            
             <div>
-              <div className="text-muted-foreground">Forecast Today</div>
-              <div className="font-mono text-secondary font-bold">{pvPanels.forecastToday}kWh</div>
+              <div className="text-muted-foreground text-xs mb-2">Forecast Today</div>
+              <div className="font-mono text-secondary font-bold text-sm">{pvPanels.forecastToday}kWh</div>
             </div>
-            <div>
-              <div className="text-muted-foreground">Total Power</div>
-              <div className="font-mono text-primary font-bold">{pvPanels.currentPower}kW</div>
+            
+            <div className="space-y-1">
+              <div className="text-muted-foreground text-xs">Upcoming Forecasts</div>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                {pvPanels.forecastUpcoming.map((forecast, i) => (
+                  <div key={i} className="flex justify-between">
+                    <span className="text-muted-foreground">Forecast {forecast.day}</span>
+                    <span className="font-mono text-secondary">{forecast.value}kWh</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </CardContent>
