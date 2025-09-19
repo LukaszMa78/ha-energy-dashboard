@@ -1,14 +1,4 @@
-# Repository configuration for Home Assistant Add-on Store
-
-# Repository Information
 name: "Energy Flow Dashboard Add-on Repository"
-description: "A beautiful energy monitoring dashboard for Home Assistant"
+description: "Beautiful energy monitoring dashboard for Home Assistant"
 url: "https://github.com/LukaszMa78/ha-energy-dashboard"
 maintainer: "Energy Dashboard Team"
-
-# Add-on Information
-addons:
-  energy-dashboard:
-    repository: "https://github.com/LukaszMa78/ha-energy-dashboard"
-    target: energy-dashboard
-    image: "ghcr.io/lukaszma78/ha-energy-dashboard/{arch}"

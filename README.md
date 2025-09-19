@@ -1,167 +1,51 @@
-# Energy Flow Dashboard - Home Assistant Add-on
-
-A beautiful, real-time energy monitoring dashboard for Home Assistant that visualizes your solar panels, battery storage, grid connection, and household energy consumption.
-
-## About
-
-This add-on provides a comprehensive energy monitoring interface that connects to your Home Assistant instance to display:
-
-- **Solar Panel Monitoring**: Individual panel performance with energy, power, voltage, and current data
-- **Battery Storage**: Real-time battery status, state of charge, and historical data
-- **Grid Connection**: Import/export status with financial tracking
-- **Inverter Monitoring**: Multi-phase power measurements and efficiency metrics
-- **House Consumption**: Room-by-room energy usage breakdown
-- **Backup Devices**: UPS and generator status monitoring
-
-## Installation
+# Energy Flow Dashboard Add-on Repository
 
 [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FLukaszMa78%2Fha-energy-dashboard)
 
-**Quick Install:**
-1. Click the button above to automatically add this repository to your Home Assistant
-2. Install the "Energy Flow Dashboard" add-on
-3. Configure your Home Assistant entities in the add-on configuration
-4. Start the add-on
-5. Access the dashboard through the Web UI
+A beautiful energy monitoring dashboard for Home Assistant that displays solar production, battery status, grid consumption, and household energy usage.
 
-**Manual Install:**
-1. Go to Settings → Add-ons → Add-on Store
-2. Click the three dots (⋮) in the top right corner
-3. Select "Repositories"
-4. Add this repository URL: `https://github.com/LukaszMa78/ha-energy-dashboard`
-5. Install the "Energy Flow Dashboard" add-on
+## Add-ons
+
+This repository contains the following add-on:
+
+### Energy Flow Dashboard
+
+![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield] ![Supports i386 Architecture][i386-shield]
+
+A comprehensive energy monitoring dashboard that provides real-time visualization of:
+
+- Solar panel production
+- Battery status and power flow
+- Grid import/export metrics
+- Household consumption by room
+- Inverter performance
+
+## Installation
+
+1. Add this repository to your Home Assistant:
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FLukaszMa78%2Fha-energy-dashboard)
+
+2. Navigate to **Settings** → **Add-ons** → **Add-on Store**
+3. Find "Energy Flow Dashboard" and click **Install**
+4. Configure your energy entities in the add-on configuration
+5. Start the add-on and open the web UI
 
 ## Configuration
 
-```yaml
-supervisor_api: true
-homeassistant_api: true
-host_network: true
-entities:
-  # Solar Panel Entities (configure up to 30 panels)
-  solar_panels:
-    - sensor.solar_panel_01_power
-    - sensor.solar_panel_01_voltage
-    - sensor.solar_panel_01_current
-    - sensor.solar_panel_01_energy_today
-  
-  # Battery Entities
-  battery:
-    power: sensor.battery_power
-    soc: sensor.battery_soc
-    voltage: sensor.battery_voltage
-    current: sensor.battery_current
-  
-  # Grid Entities
-  grid:
-    power: sensor.grid_power
-    import_today: sensor.grid_import_today
-    export_today: sensor.grid_export_today
-  
-  # Inverter Entities
-  inverter:
-    power: sensor.inverter_power
-    efficiency: sensor.inverter_efficiency
-    temperature: sensor.inverter_temperature
-    
-  # House Consumption Entities (by room)
-  consumption:
-    living_room: sensor.living_room_power
-    kitchen: sensor.kitchen_power
-    bedroom_1: sensor.bedroom_1_power
-    # Add more rooms as needed
-```
+The add-on requires configuration of your Home Assistant entities for:
 
-## Features
-
-### 🌞 Solar Panel Monitoring
-- Individual panel performance tracking
-- Real-time power, voltage, and current measurements
-- Daily energy production per panel
-- Active/inactive panel status
-- Scrollable panel list with hidden scrollbars
-
-### 🔋 Battery Management
-- State of charge visualization
-- Power flow (charging/discharging)
-- Historical performance charts
-- Battery health indicators
-
-### ⚡ Grid Connection
-- Import/export status with color coding
-- Daily/monthly energy statistics
-- Cost tracking and financial overview
-- Real-time power flow visualization
-
-### 🏠 Smart Home Integration
-- Room-by-room consumption breakdown
-- Device-level monitoring
-- Expandable floor and room views
-- Real-time device status
-
-### 📊 Advanced Analytics
-- Historical data visualization
-- Energy forecasting
-- Efficiency metrics
-- Performance trends
-
-## API Integration
-
-The add-on connects to Home Assistant's API to fetch real-time data from your configured entities. It supports:
-
-- WebSocket connections for real-time updates
-- RESTful API integration
-- Automatic entity discovery
-- Configurable update intervals
-
-## Supported Hardware
-
-This add-on works with any Home Assistant compatible energy monitoring hardware:
-
-- Solar inverters (SolarEdge, Fronius, Huawei, etc.)
-- Battery systems (Tesla Powerwall, LG Chem, Pylontech, etc.)
-- Smart meters and energy monitors
-- Individual smart plugs and switches
-
-## Development
-
-This project was built with Lovable and synced to GitHub. The dashboard is built using:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-### Local Development
-
-```sh
-# Clone the repository
-git clone https://github.com/LukaszMa78/ha-energy-dashboard.git
-
-# Navigate to the project directory
-cd ha-energy-dashboard
-
-# Install dependencies
-npm i
-
-# Start the development server
-npm run dev
-```
+- Solar panel sensors
+- Battery sensors (SOC, power, voltage, current)
+- Grid sensors (power, import/export energy)
+- Inverter sensors (power, efficiency, temperature)
+- House consumption sensors by room
 
 ## Support
 
-For support and feature requests, please visit the [GitHub repository](https://github.com/LukaszMa78/ha-energy-dashboard) or the [Home Assistant Community Forum](https://community.home-assistant.io/).
+For issues and feature requests, please visit the [GitHub repository](https://github.com/LukaszMa78/ha-energy-dashboard).
 
-## Changelog
-
-### v1.0.0
-- Initial release
-- Complete energy monitoring dashboard
-- Home Assistant API integration
-- Responsive design with dark/light mode support
-- Real-time data updates
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
+[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
+[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
