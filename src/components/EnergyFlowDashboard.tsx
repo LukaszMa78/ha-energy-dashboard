@@ -447,12 +447,12 @@ const EnergyFlowDashboard = () => {
           <div>
             <div className="text-muted-foreground">Imported Today</div>
             <div className="font-mono text-sm">{grid.imported}kWh</div>
-            <div className="text-muted-foreground">€{(grid.imported * grid.cost).toFixed(2)}</div>
+            <div className="text-muted-foreground">{(grid.imported * grid.cost).toFixed(2)} PLN</div>
           </div>
           <div>
             <div className="text-muted-foreground">Exported Today</div>
             <div className="font-mono text-sm">{grid.exported}kWh</div>
-            <div className="text-muted-foreground">€{(grid.exported * grid.feedInTariff).toFixed(2)}</div>
+            <div className="text-muted-foreground">{(grid.exported * grid.feedInTariff).toFixed(2)} PLN</div>
           </div>
         </div>
       </CardContent>
