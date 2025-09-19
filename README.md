@@ -15,11 +15,21 @@ This add-on provides a comprehensive energy monitoring interface that connects t
 
 ## Installation
 
-1. Add this repository to your Home Assistant add-on store
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FLukaszMa78%2Fha-energy-dashboard)
+
+**Quick Install:**
+1. Click the button above to automatically add this repository to your Home Assistant
 2. Install the "Energy Flow Dashboard" add-on
 3. Configure your Home Assistant entities in the add-on configuration
 4. Start the add-on
 5. Access the dashboard through the Web UI
+
+**Manual Install:**
+1. Go to Settings → Add-ons → Add-on Store
+2. Click the three dots (⋮) in the top right corner
+3. Select "Repositories"
+4. Add this repository URL: `https://github.com/LukaszMa78/ha-energy-dashboard`
+5. Install the "Energy Flow Dashboard" add-on
 
 ## Configuration
 
