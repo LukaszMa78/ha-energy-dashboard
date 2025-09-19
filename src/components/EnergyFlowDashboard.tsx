@@ -1229,7 +1229,14 @@ const EnergyFlowDashboard = () => {
         <CardTitle className="flex items-center gap-2 text-sm">
           <Plug className="w-4 h-4 text-primary" />
           Grid Connection
-          <Badge variant={grid.power > 0 ? "destructive" : "default"} className="ml-auto text-base px-4 py-2">
+          <Badge 
+            variant={grid.power > 0 ? "destructive" : "outline"} 
+            className={`ml-auto text-base px-4 py-2 ${
+              grid.power <= 0 
+                ? "bg-green-500 text-white border-green-500 hover:bg-green-600" 
+                : ""
+            }`}
+          >
             {grid.power > 0 ? 'Importing' : 'Exporting'}
           </Badge>
         </CardTitle>
