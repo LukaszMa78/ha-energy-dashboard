@@ -27,7 +27,7 @@ import {
   Activity,
   Gauge
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 const EnergyFlowDashboard = () => {
   const [expandedFloors, setExpandedFloors] = useState<number[]>([]);
@@ -343,100 +343,83 @@ const EnergyFlowDashboard = () => {
     </Card>
   );
 
-  const BatteryCard = ({ battery }) => {
-    const CustomTooltip = ({ active, payload, label }: any) => {
-      if (active && payload && payload.length) {
-        return (
-          <div className="bg-popover border border-border rounded-lg p-2 shadow-lg">
-            <p className="text-xs text-muted-foreground">{`Time: ${label}`}</p>
-            <p className="text-xs text-primary font-semibold">{`Level: ${payload[0].value}%`}</p>
-          </div>
-        );
-      }
-      return null;
-    };
-
-    return (
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-sm">
-            <Battery className="w-4 h-4 text-primary" />
-            Battery Storage
-            <Badge variant={battery.power > 0 ? "default" : "secondary"} className="ml-auto">
-              {battery.power > 0 ? 'Charging' : 'Discharging'}
-            </Badge>
-          </CardTitle>
-          {/* Time to empty/full under status */}
-          <div className="text-xs text-muted-foreground">
-            {battery.power > 0 ? `Full in: ${battery.timeToFull}` : `Empty in: ${battery.timeToEmpty}`}
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="grid grid-cols-2 gap-3 text-xs">
-            <div>
-              <div className="text-muted-foreground">Power</div>
-              <div className="font-mono text-primary text-sm">{Math.abs(battery.power)}kW</div>
-            </div>
-            <div>
-              <div className="text-muted-foreground">SOC</div>
-              <div className="font-mono text-sm">{battery.soc}%</div>
-            </div>
-            <div>
-              <div className="text-muted-foreground">Voltage</div>
-              <div className="font-mono text-sm">{battery.voltage}V</div>
-            </div>
-            <div>
-              <div className="text-muted-foreground">Current</div>
-              <div className="font-mono text-sm">{battery.current}A</div>
-            </div>
-            <div>
-              <div className="text-muted-foreground">Temperature</div>
-              <div className="font-mono text-sm">{battery.temperature}°C</div>
-            </div>
-            <div>
-              <div className="text-muted-foreground">Cycles</div>
-              <div className="font-mono text-sm">{battery.cycles}</div>
-            </div>
+  const BatteryCard = ({ battery }) => (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-sm">
+          <Battery className="w-4 h-4 text-primary" />
+          Battery Storage
+          <Badge variant={battery.power > 0 ? "default" : "secondary"} className="ml-auto">
+            {battery.power > 0 ? 'Charging' : 'Discharging'}
+          </Badge>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div className="grid grid-cols-2 gap-3 text-xs">
+          <div>
+            <div className="text-muted-foreground">Power</div>
+            <div className="font-mono text-primary text-sm">{Math.abs(battery.power)}kW</div>
           </div>
           <div>
-            <div className="flex justify-between text-xs mb-1">
-              <span className="text-muted-foreground">Capacity</span>
-              <span className="text-muted-foreground">{battery.capacity}kWh</span>
-            </div>
-            <Progress value={battery.soc} className="h-2" />
+            <div className="text-muted-foreground">SOC</div>
+            <div className="font-mono text-sm">{battery.soc}%</div>
           </div>
-          
-          {/* Battery Level Chart */}
-          <div className="space-y-2">
-            <div className="text-xs text-muted-foreground">Battery Level Today</div>
-            <div className="h-16 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={battery.dailyLevels}>
-                  <XAxis 
-                    dataKey="time" 
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
-                    interval="preserveStartEnd"
-                  />
-                  <YAxis hide />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Line 
-                    type="monotone" 
-                    dataKey="level" 
-                    stroke="hsl(var(--primary))" 
-                    strokeWidth={2}
-                    dot={false}
-                    activeDot={{ r: 3, fill: 'hsl(var(--primary))' }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+          <div>
+            <div className="text-muted-foreground">Voltage</div>
+            <div className="font-mono text-sm">{battery.voltage}V</div>
           </div>
-        </CardContent>
-      </Card>
-    );
-  };
+          <div>
+            <div className="text-muted-foreground">Current</div>
+            <div className="font-mono text-sm">{battery.current}A</div>
+          </div>
+          <div>
+            <div className="text-muted-foreground">Temperature</div>
+            <div className="font-mono text-sm">{battery.temperature}°C</div>
+          </div>
+          <div>
+            <div className="text-muted-foreground">Cycles</div>
+            <div className="font-mono text-sm">{battery.cycles}</div>
+          </div>
+        </div>
+        <div>
+          <div className="flex justify-between text-xs mb-1">
+            <span className="text-muted-foreground">
+              {battery.power > 0 ? `Full in: ${battery.timeToFull}` : `Empty in: ${battery.timeToEmpty}`}
+            </span>
+            <span className="text-muted-foreground">{battery.capacity}kWh</span>
+          </div>
+          <Progress value={battery.soc} className="h-2" />
+        </div>
+        
+        {/* Battery Level Chart */}
+        <div className="space-y-2">
+          <div className="text-xs text-muted-foreground">Battery Level Today</div>
+          <div className="h-16 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={battery.dailyLevels}>
+                <XAxis 
+                  dataKey="time" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                  interval="preserveStartEnd"
+                />
+                <YAxis hide />
+                <Line 
+                  type="monotone" 
+                  dataKey="level" 
+                  stroke="hsl(var(--primary))" 
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 3, fill: 'hsl(var(--primary))' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
 
   const InverterCard = ({ inverter }) => (
     <Card>
