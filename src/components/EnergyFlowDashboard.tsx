@@ -78,8 +78,9 @@ const EnergyFlowDashboard = () => {
       efficiency: 97.2, 
       temperature: 45.3,
       dcVoltage: 385,
-      acVoltage: 230,
-      frequency: 50.0
+      acVoltage: { phase1: 229.5, phase2: 230.1, phase3: 229.8 },
+      current: { phase1: 8.4, phase2: 8.2, phase3: 8.7 },
+      frequency: { phase1: 50.01, phase2: 49.99, phase3: 50.02 }
     },
     backupDevices: [
       { name: 'Induction Hob', power: 2.1, voltage: 230, current: 9.1, icon: Zap, status: 'active' },
@@ -388,9 +389,31 @@ const EnergyFlowDashboard = () => {
             <div className="text-muted-foreground">DC Voltage</div>
             <div className="font-mono text-sm">{inverter.dcVoltage}V</div>
           </div>
-          <div>
-            <div className="text-muted-foreground">AC Voltage</div>
-            <div className="font-mono text-sm">{inverter.acVoltage}V</div>
+        </div>
+        
+        {/* Three-phase AC measurements */}
+        <div className="space-y-2">
+          <div className="text-xs font-medium text-muted-foreground">AC Phase Measurements</div>
+          <div className="grid grid-cols-4 gap-2 text-xs">
+            <div className="text-muted-foreground font-medium">Phase</div>
+            <div className="text-muted-foreground font-medium">Frequency</div>
+            <div className="text-muted-foreground font-medium">Voltage</div>
+            <div className="text-muted-foreground font-medium">Current</div>
+            
+            <div className="text-muted-foreground">L1</div>
+            <div className="font-mono text-sm">{inverter.frequency.phase1}Hz</div>
+            <div className="font-mono text-sm">{inverter.acVoltage.phase1}V</div>
+            <div className="font-mono text-sm">{inverter.current.phase1}A</div>
+            
+            <div className="text-muted-foreground">L2</div>
+            <div className="font-mono text-sm">{inverter.frequency.phase2}Hz</div>
+            <div className="font-mono text-sm">{inverter.acVoltage.phase2}V</div>
+            <div className="font-mono text-sm">{inverter.current.phase2}A</div>
+            
+            <div className="text-muted-foreground">L3</div>
+            <div className="font-mono text-sm">{inverter.frequency.phase3}Hz</div>
+            <div className="font-mono text-sm">{inverter.acVoltage.phase3}V</div>
+            <div className="font-mono text-sm">{inverter.current.phase3}A</div>
           </div>
         </div>
       </CardContent>
