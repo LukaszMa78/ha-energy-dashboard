@@ -1067,7 +1067,7 @@ const EnergyFlowDashboard = () => {
   );
 
   const BatteryCard = ({ battery }) => (
-    <Card className={battery.power <= 0 ? "bg-red-500/10 border-red-500/20" : "bg-green-500/10 border-green-500/20"}>
+    <Card className="border-primary/20">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Battery className="w-4 h-4 text-primary" />
@@ -1224,7 +1224,7 @@ const EnergyFlowDashboard = () => {
   );
 
   const GridCard = ({ grid }) => (
-    <Card className={grid.power > 0 ? "bg-red-500/10 border-red-500/20" : "bg-green-500/10 border-green-500/20"}>
+    <Card className="border-primary/20">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Plug className="w-4 h-4 text-primary" />
