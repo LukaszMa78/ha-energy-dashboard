@@ -1,0 +1,81 @@
+# Energy Flow Dashboard Add-on Configuration
+name: "Energy Flow Dashboard"
+version: "1.0.0"
+slug: "energy-dashboard"
+description: "Beautiful energy monitoring dashboard for solar, battery, and home consumption"
+url: "https://github.com/LukaszMa78/ha-energy-dashboard"
+startup: services
+boot: auto
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+ports:
+  "8080/tcp": 8080
+webui: "http://[HOST]:[PORT:8080]"
+ingress: true
+panel_icon: mdi:solar-power
+panel_title: "Energy Dashboard"
+hassio_api: true
+hassio_role: default
+homeassistant_api: true
+host_network: false
+privileged: []
+full_access: false
+stage: stable
+
+options:
+  entities:
+    solar_panels: []
+    battery:
+      soc: ""
+      power: ""
+      voltage: ""
+      current: ""
+    grid:
+      power: ""
+      voltage: ""
+      current: ""
+      import_energy: ""
+      export_energy: ""
+    inverter:
+      power: ""
+      efficiency: ""
+      temperature: ""
+      ac_phases: []
+    house:
+      total_power: ""
+      rooms: []
+
+schema:
+  entities:
+    solar_panels:
+      - str
+    battery:
+      soc: str
+      power: str
+      voltage: str?
+      current: str?
+    grid:
+      power: str
+      voltage: str?
+      current: str?
+      import_energy: str?
+      export_energy: str?
+    inverter:
+      power: str
+      efficiency: str?
+      temperature: str?
+      ac_phases:
+        - str
+    house:
+      total_power: str
+      rooms:
+        - name: str
+          entities:
+            - str
+
+image: "ghcr.io/lukaszma78/ha-energy-dashboard/{arch}"
