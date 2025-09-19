@@ -533,7 +533,7 @@ const EnergyFlowDashboard = () => {
     const activePanels = pvPanels.panels.filter(panel => panel.active).length;
     
     return (
-      <Card className="bg-gradient-card border-primary/20">
+      <Card className="bg-gradient-card border-primary/20 h-fit">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-sm">
             <Sun className="w-4 h-4 text-primary" />
