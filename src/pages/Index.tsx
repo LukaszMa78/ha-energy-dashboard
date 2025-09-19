@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import DashboardHeader from "@/components/DashboardHeader";
 import DeviceCard from "@/components/DeviceCard";
 import RoomSection from "@/components/RoomSection";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { 
   Lightbulb, 
   Thermometer, 
@@ -14,7 +17,9 @@ import {
   Camera,
   Lock,
   Wind,
-  Droplets
+  Droplets,
+  Battery,
+  ArrowRight
 } from "lucide-react";
 
 interface Device {
@@ -60,6 +65,27 @@ const Index = () => {
       <DashboardHeader />
       
       <main className="container mx-auto px-6 py-8 space-y-8">
+        {/* Energy Dashboard Navigation */}
+        <Card className="bg-gradient-card border-primary/20">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Battery className="w-6 h-6 text-primary" />
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground">Energy Management</h2>
+                  <p className="text-muted-foreground">Monitor PV systems, battery, and home consumption</p>
+                </div>
+              </div>
+              <Link to="/energy">
+                <Button className="flex items-center gap-2">
+                  View Energy Dashboard
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+
         <RoomSection title="Living Room">
           {livingRoomDevices.map((device) => (
             <DeviceCard
