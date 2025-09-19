@@ -630,23 +630,6 @@ const EnergyFlowDashboard = () => {
     </Card>
   );
 
-  const AnimatedArrow = ({ direction, power, className = "" }) => {
-    const ArrowIcon = {
-      right: ArrowRight,
-      left: ArrowLeft,
-      down: ArrowDown,
-      up: ArrowUp
-    }[direction];
-
-    return (
-      <div className={`absolute flex items-center justify-center ${className}`}>
-        <div className="flex items-center space-x-1 bg-background/90 backdrop-blur px-3 py-1.5 rounded-full border shadow-lg">
-          <ArrowIcon className="w-4 h-4 text-primary animate-pulse" />
-          <span className="text-xs font-mono text-primary font-medium">{Math.abs(power)}kW</span>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gradient-background p-4">
@@ -685,40 +668,6 @@ const EnergyFlowDashboard = () => {
 
         {/* Middle Right: Empty */}
         <div className="xl:col-span-1"></div>
-
-        {/* Middle Right: Empty for flow arrows */}
-        <div className="xl:col-span-1 relative">
-          {/* Energy Flow Arrows */}
-          <div className="absolute inset-0">
-            {/* PV to Inverter flows */}
-            <AnimatedArrow 
-              direction="right" 
-              power={energyData.pv1.power + energyData.pv2.power} 
-              className="top-1/4 left-1/2 transform -translate-x-1/2"
-            />
-            
-            {/* Inverter to Battery */}
-            <AnimatedArrow 
-              direction="down" 
-              power={energyData.battery.power} 
-              className="top-1/2 left-1/4 transform -translate-x-1/2"
-            />
-            
-            {/* Inverter to Home */}
-            <AnimatedArrow 
-              direction="up" 
-              power={energyData.house.totalPower} 
-              className="top-3/4 left-3/4 transform -translate-x-1/2"
-            />
-            
-            {/* Grid interaction */}
-            <AnimatedArrow 
-              direction={energyData.grid.power > 0 ? "left" : "right"} 
-              power={energyData.grid.power} 
-              className="bottom-1/4 left-1/2 transform -translate-x-1/2"
-            />
-          </div>
-        </div>
 
         {/* Bottom Left: Empty */}
         <div className="xl:col-span-1"></div>
