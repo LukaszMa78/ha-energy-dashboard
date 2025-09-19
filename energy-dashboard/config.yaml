@@ -23,7 +23,7 @@ hassio_api: true
 hassio_role: default
 homeassistant_api: true
 host_network: false
-privileged: false
+privileged: []
 full_access: false
 
 options:
@@ -51,30 +51,27 @@ options:
 
 schema:
   entities:
-    solar_panels:
-      - str
-    battery:
-      soc: str
-      power: str
+    solar_panels: ["str"]
+    battery: 
+      soc: "str"
+      power: "str" 
       voltage: "str?"
       current: "str?"
     grid:
-      power: str
+      power: "str"
       voltage: "str?"
       current: "str?"
       import_energy: "str?"
       export_energy: "str?"
     inverter:
-      power: str
+      power: "str"
       efficiency: "str?"
       temperature: "str?"
-      ac_phases:
-        - str
+      ac_phases: ["str"]
     house:
-      total_power: str
+      total_power: "str"
       rooms:
-        - name: str
-          entities:
-            - str
+        - name: "str"
+          entities: ["str"]
 
 image: "ghcr.io/lukaszma78/ha-energy-dashboard/{arch}"
