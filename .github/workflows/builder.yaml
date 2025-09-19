@@ -23,21 +23,11 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
 
-      - name: Get changed files
-        id: changed_files
-        uses: jitterbit/get-changed-files@v1
-
-      - name: Find add-on directories
+      - name: Set add-on list
         id: changed_addons
         run: |
-          # Always build energy-dashboard on main branch
-          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "addons=[\"energy-dashboard\"]" >> $GITHUB_OUTPUT
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "addons=[]" >> $GITHUB_OUTPUT
-          fi
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "addons=[\"energy-dashboard\"]" >> $GITHUB_OUTPUT
 
   build:
     needs: init
