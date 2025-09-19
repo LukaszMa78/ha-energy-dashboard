@@ -245,6 +245,7 @@ const EnergyFlowDashboard = () => {
     },
     pvPanels: {
       totalProduced: 47.7,
+      forecastToday: 52.3,
       currentPower: 7.3,
       totalPanels: 30,
       panels: Array.from({ length: 30 }, (_, i) => ({
@@ -559,10 +560,14 @@ const EnergyFlowDashboard = () => {
           <Separator />
 
           {/* Summary */}
-          <div className="grid grid-cols-2 gap-3 text-xs">
+          <div className="grid grid-cols-3 gap-3 text-xs">
             <div>
               <div className="text-muted-foreground">Total Today</div>
               <div className="font-mono text-primary font-bold">{pvPanels.totalProduced}kWh</div>
+            </div>
+            <div>
+              <div className="text-muted-foreground">Forecast Today</div>
+              <div className="font-mono text-secondary font-bold">{pvPanels.forecastToday}kWh</div>
             </div>
             <div>
               <div className="text-muted-foreground">Total Power</div>
