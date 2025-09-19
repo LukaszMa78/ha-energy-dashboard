@@ -582,7 +582,7 @@ const EnergyFlowDashboard = () => {
             
             <div>
               <div className="text-muted-foreground text-xs mb-2">Forecast Today</div>
-              <div className="font-mono text-secondary font-bold text-sm">{pvPanels.forecastToday}kWh</div>
+              <div className="font-mono text-foreground font-bold text-sm">{pvPanels.forecastToday}kWh</div>
             </div>
             
             <div className="space-y-1">
@@ -591,7 +591,7 @@ const EnergyFlowDashboard = () => {
                 {pvPanels.forecastUpcoming.map((forecast, i) => (
                   <div key={i} className="flex justify-between">
                     <span className="text-muted-foreground">Forecast {forecast.day}</span>
-                    <span className="font-mono text-secondary">{forecast.value}kWh</span>
+                    <span className="font-mono text-foreground">{forecast.value}kWh</span>
                   </div>
                 ))}
               </div>
