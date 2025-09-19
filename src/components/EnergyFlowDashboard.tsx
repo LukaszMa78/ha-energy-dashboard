@@ -1350,12 +1350,12 @@ const EnergyFlowDashboard = () => {
           {/* Panel List */}
           <div className="max-h-96 overflow-y-auto space-y-2">
             {pvPanels.panels.map((panel, i) => (
-              <div key={i} className={`p-3 rounded-lg border ${
+              <div key={i} className={`flex items-center justify-between p-3 rounded-lg border ${
                 panel.active 
                   ? 'bg-primary/5 border-primary/20' 
                   : 'bg-muted/50 border-muted-foreground/20 opacity-60'
               }`}>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${
                     panel.active ? 'bg-primary' : 'bg-muted-foreground'
                   }`} />
@@ -1369,22 +1369,22 @@ const EnergyFlowDashboard = () => {
                   </span>
                 </div>
                 
-                <div className="grid grid-cols-4 gap-2 text-xs">
-                  <div className="space-y-1">
+                <div className="flex items-center gap-4 text-xs font-mono">
+                  <div className="text-center">
                     <div className="text-muted-foreground font-medium">Energy</div>
-                    <div className="font-mono text-primary font-bold">{panel.energyToday} kWh</div>
+                    <div className="text-primary font-bold">{panel.energyToday} kWh</div>
                   </div>
-                  <div className="space-y-1">
+                  <div className="text-center">
                     <div className="text-muted-foreground font-medium">Power</div>
-                    <div className="font-mono text-primary font-bold">{panel.power} kW</div>
+                    <div className="text-primary font-bold">{panel.power} kW</div>
                   </div>
-                  <div className="space-y-1">
+                  <div className="text-center">
                     <div className="text-muted-foreground font-medium">Voltage</div>
-                    <div className="font-mono text-foreground font-bold">{panel.voltage} V</div>
+                    <div className="text-foreground font-bold">{panel.voltage} V</div>
                   </div>
-                  <div className="space-y-1">
+                  <div className="text-center">
                     <div className="text-muted-foreground font-medium">Current</div>
-                    <div className="font-mono text-foreground font-bold">{panel.current} A</div>
+                    <div className="text-foreground font-bold">{panel.current} A</div>
                   </div>
                 </div>
               </div>
