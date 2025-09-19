@@ -9,12 +9,11 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-COPY bun.lockb* ./
 
 # Install dependencies
-RUN npm install
+RUN npm install || npm install --legacy-peer-deps
 
-# Copy source code
+# Copy source code 
 COPY src ./src
 COPY public ./public
 COPY index.html ./
@@ -32,7 +31,7 @@ RUN npm install -g serve
 EXPOSE 8080
 
 # Copy run script
-COPY energy-dashboard/run.sh /
+COPY run.sh /
 RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
