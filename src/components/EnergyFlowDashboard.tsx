@@ -658,10 +658,11 @@ const EnergyFlowDashboard = () => {
       {/* Main Grid Layout */}
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 relative">
         
-        {/* Top Left: PV Systems */}
+        {/* Top Left: PV Systems and Battery */}
         <div className="xl:col-span-1 space-y-4">
           <PVSystemCard pv={energyData.pv1} />
           <PVSystemCard pv={energyData.pv2} />
+          <BatteryCard battery={energyData.battery} />
         </div>
 
         {/* Top Middle: PV Panels Array */}
@@ -674,49 +675,16 @@ const EnergyFlowDashboard = () => {
           <HouseConsumptionCard house={energyData.house} backupDevices={energyData.backupDevices} />
         </div>
 
-        {/* Middle Left: Battery */}
-        <div className="xl:col-span-1">
-          <BatteryCard battery={energyData.battery} />
-        </div>
+        {/* Middle Left: Empty */}
+        <div className="xl:col-span-1"></div>
 
         {/* Middle Center: Inverter */}
         <div className="xl:col-span-2">
           <InverterCard inverter={energyData.inverter} />
         </div>
 
-        {/* Middle Right: Empty for flow arrows */}
-        <div className="xl:col-span-1 relative">
-          {/* Energy Flow Arrows */}
-          <div className="absolute inset-0">
-            {/* PV to Inverter flows */}
-            <AnimatedArrow 
-              direction="right" 
-              power={energyData.pv1.power + energyData.pv2.power} 
-              className="top-1/4 left-1/2 transform -translate-x-1/2"
-            />
-            
-            {/* Inverter to Battery */}
-            <AnimatedArrow 
-              direction="down" 
-              power={energyData.battery.power} 
-              className="top-1/2 left-1/4 transform -translate-x-1/2"
-            />
-            
-            {/* Inverter to Home */}
-            <AnimatedArrow 
-              direction="up" 
-              power={energyData.house.totalPower} 
-              className="top-3/4 left-3/4 transform -translate-x-1/2"
-            />
-            
-            {/* Grid interaction */}
-            <AnimatedArrow 
-              direction={energyData.grid.power > 0 ? "left" : "right"} 
-              power={energyData.grid.power} 
-              className="bottom-1/4 left-1/2 transform -translate-x-1/2"
-            />
-          </div>
-        </div>
+        {/* Middle Right: Empty */}
+        <div className="xl:col-span-1"></div>
 
         {/* Middle Right: Empty for flow arrows */}
         <div className="xl:col-span-1 relative">
