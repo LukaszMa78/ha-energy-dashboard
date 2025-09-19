@@ -1282,7 +1282,7 @@ const EnergyFlowDashboard = () => {
     const activePanels = pvPanels.panels.filter(panel => panel.active).length;
     
     return (
-      <Card className="bg-gradient-card border-primary/20 h-fit">
+      <Card className="bg-gradient-card border-primary/20 h-[600px]">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-sm">
             <Sun className="w-4 h-4 text-primary" />
@@ -1353,7 +1353,7 @@ const EnergyFlowDashboard = () => {
   };
 
   const HouseConsumptionCard = ({ house, backupDevices }) => (
-    <Card className="bg-gradient-card border-primary/20 h-fit">
+    <Card className="bg-gradient-card border-primary/20 h-[600px]">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Home className="w-4 h-4 text-primary" />
