@@ -977,7 +977,7 @@ const EnergyFlowDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">
                   {(energyData.pv1.production + energyData.pv2.production).toFixed(1)}kWh
@@ -987,6 +987,14 @@ const EnergyFlowDashboard = () => {
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">32.5kWh</div>
                 <div className="text-sm text-muted-foreground">Consumed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">{energyData.grid.imported}kWh</div>
+                <div className="text-sm text-muted-foreground">Imported Today</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">{energyData.grid.exported}kWh</div>
+                <div className="text-sm text-muted-foreground">Exported Today</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">74%</div>
