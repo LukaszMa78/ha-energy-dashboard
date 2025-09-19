@@ -23,9 +23,8 @@ hassio_api: true
 hassio_role: default
 homeassistant_api: true
 host_network: false
-privileged: []
+privileged: false
 full_access: false
-stage: stable
 
 options:
   entities:
@@ -57,18 +56,18 @@ schema:
     battery:
       soc: str
       power: str
-      voltage: str?
-      current: str?
+      voltage: "str?"
+      current: "str?"
     grid:
       power: str
-      voltage: str?
-      current: str?
-      import_energy: str?
-      export_energy: str?
+      voltage: "str?"
+      current: "str?"
+      import_energy: "str?"
+      export_energy: "str?"
     inverter:
       power: str
-      efficiency: str?
-      temperature: str?
+      efficiency: "str?"
+      temperature: "str?"
       ac_phases:
         - str
     house:
