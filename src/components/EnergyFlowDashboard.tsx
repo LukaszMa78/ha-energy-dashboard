@@ -967,37 +967,8 @@ const EnergyFlowDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-background p-4">
-      <div className="space-y-4">
-        
-        {/* Top Row: PV Systems, PV Panels, House Consumption */}
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-4">
-          {/* PV Systems */}
-          <div className="xl:col-span-1 space-y-4">
-            <PVSystemCard pv={energyData.pv1} />
-            <PVSystemCard pv={energyData.pv2} />
-          </div>
-
-          {/* PV Panels Array - Extended */}
-          <div className="xl:col-span-2">
-            <PVPanelsCard pvPanels={energyData.pvPanels} />
-          </div>
-
-          {/* House Consumption */}
-          <div className="xl:col-span-1">
-            <HouseConsumptionCard house={energyData.house} backupDevices={energyData.backupDevices} />
-          </div>
-        </div>
-
-        {/* Middle Row: Battery, Inverter, Grid in one line */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <BatteryCard battery={energyData.battery} />
-          <InverterCard inverter={energyData.inverter} />
-          <GridCard grid={energyData.grid} />
-        </div>
-      </div>
-
-      {/* Daily Summary */}
-      <div className="mt-6">
+      {/* Daily Energy Summary */}
+      <div className="mb-6">
         <Card className="bg-gradient-card border-primary/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -1028,6 +999,35 @@ const EnergyFlowDashboard = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="space-y-4">
+        
+        {/* Top Row: PV Systems, PV Panels, House Consumption */}
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-4">
+          {/* PV Systems */}
+          <div className="xl:col-span-1 space-y-4">
+            <PVSystemCard pv={energyData.pv1} />
+            <PVSystemCard pv={energyData.pv2} />
+          </div>
+
+          {/* PV Panels Array - Extended */}
+          <div className="xl:col-span-2">
+            <PVPanelsCard pvPanels={energyData.pvPanels} />
+          </div>
+
+          {/* House Consumption */}
+          <div className="xl:col-span-1">
+            <HouseConsumptionCard house={energyData.house} backupDevices={energyData.backupDevices} />
+          </div>
+        </div>
+
+        {/* Middle Row: Battery, Inverter, Grid in one line */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <BatteryCard battery={energyData.battery} />
+          <InverterCard inverter={energyData.inverter} />
+          <GridCard grid={energyData.grid} />
+        </div>
       </div>
     </div>
   );
