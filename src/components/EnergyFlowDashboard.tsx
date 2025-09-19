@@ -241,6 +241,14 @@ const EnergyFlowDashboard = () => {
           ]
         }
       ]
+    },
+    pvPanels: {
+      totalProduced: 47.7, // Total energy produced today
+      currentPower: 7.3, // Combined current power from all panels
+      voltage: 385,
+      current: 18.9,
+      panelsActive: 28, // Number of panels currently producing
+      totalPanels: 30, // Default 30 panels, configurable
     }
   };
 
@@ -463,6 +471,66 @@ const EnergyFlowDashboard = () => {
     </Card>
   );
 
+  const PVPanelsCard = ({ pvPanels }) => (
+    <Card className="bg-gradient-card border-primary/20">
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-sm">
+          <Sun className="w-4 h-4 text-primary" />
+          PV Panel Array
+          <Badge className="ml-auto">{pvPanels.panelsActive}/{pvPanels.totalPanels}</Badge>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {/* Solar Panel Visualization */}
+        <div className="bg-muted/30 rounded-lg p-4 border border-primary/20">
+          <div className="grid grid-cols-6 gap-1 mb-3">
+            {Array.from({ length: 30 }, (_, i) => (
+              <div
+                key={i}
+                className={`aspect-square rounded-sm border ${
+                  i < pvPanels.panelsActive
+                    ? 'bg-gradient-to-br from-primary/60 to-primary/40 border-primary/40'
+                    : 'bg-muted border-muted-foreground/20'
+                }`}
+              />
+            ))}
+          </div>
+          <div className="text-center">
+            <div className="text-xs text-muted-foreground">
+              {pvPanels.totalPanels} panels • {((pvPanels.panelsActive / pvPanels.totalPanels) * 100).toFixed(0)}% active
+            </div>
+          </div>
+        </div>
+
+        {/* Power Metrics */}
+        <div className="grid grid-cols-2 gap-3 text-xs">
+          <div>
+            <div className="text-muted-foreground">Total Produced</div>
+            <div className="font-mono text-primary text-lg font-bold">{pvPanels.totalProduced}kWh</div>
+          </div>
+          <div>
+            <div className="text-muted-foreground">Current Power</div>
+            <div className="font-mono text-primary text-lg font-bold">{pvPanels.currentPower}kW</div>
+          </div>
+        </div>
+
+        <Separator />
+
+        {/* Electrical Details */}
+        <div className="grid grid-cols-2 gap-3 text-xs">
+          <div>
+            <div className="text-muted-foreground">Voltage</div>
+            <div className="font-mono text-sm">{pvPanels.voltage}V</div>
+          </div>
+          <div>
+            <div className="text-muted-foreground">Current</div>
+            <div className="font-mono text-sm">{pvPanels.current}A</div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   const HouseConsumptionCard = ({ house }) => (
     <Card className="h-fit">
       <CardHeader className="pb-2">
@@ -598,7 +666,49 @@ const EnergyFlowDashboard = () => {
           <BatteryCard battery={energyData.battery} />
         </div>
 
-        {/* Middle Center: Inverter */}
+        {/* Middle Center: PV Panels Array */}
+        <div className="xl:col-span-2">
+          <PVPanelsCard pvPanels={energyData.pvPanels} />
+        </div>
+
+        {/* Middle Right: Empty for flow arrows */}
+        <div className="xl:col-span-1 relative">
+          {/* Energy Flow Arrows */}
+          <div className="absolute inset-0">
+            {/* PV to Inverter flows */}
+            <AnimatedArrow 
+              direction="right" 
+              power={energyData.pv1.power + energyData.pv2.power} 
+              className="top-1/4 left-1/2 transform -translate-x-1/2"
+            />
+            
+            {/* Inverter to Battery */}
+            <AnimatedArrow 
+              direction="down" 
+              power={energyData.battery.power} 
+              className="top-1/2 left-1/4 transform -translate-x-1/2"
+            />
+            
+            {/* Inverter to Home */}
+            <AnimatedArrow 
+              direction="up" 
+              power={energyData.house.totalPower} 
+              className="top-3/4 left-3/4 transform -translate-x-1/2"
+            />
+            
+            {/* Grid interaction */}
+            <AnimatedArrow 
+              direction={energyData.grid.power > 0 ? "left" : "right"} 
+              power={energyData.grid.power} 
+              className="bottom-1/4 left-1/2 transform -translate-x-1/2"
+            />
+          </div>
+        </div>
+
+        {/* Bottom Left: Empty */}
+        <div className="xl:col-span-1"></div>
+
+        {/* Bottom Center: Inverter */}
         <div className="xl:col-span-2">
           <InverterCard inverter={energyData.inverter} />
         </div>
