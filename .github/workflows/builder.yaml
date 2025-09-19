@@ -40,9 +40,14 @@ jobs:
             fi
           done
 
-          changed=$(printf "%s\n" "${changed_addons[@]}" | jq -R . | jq -s .)
-          echo "changed=${changed}" >> $GITHUB_OUTPUT
-          echo "addons=${changed}" >> $GITHUB_OUTPUT
+          if [ ${#changed_addons[@]} -eq 0 ]; then
+            echo "changed=[]" >> $GITHUB_OUTPUT
+            echo "addons=[]" >> $GITHUB_OUTPUT
+          else
+            changed=$(printf "%s\n" "${changed_addons[@]}" | jq -R . | jq -s .)
+            echo "changed=${changed}" >> $GITHUB_OUTPUT
+            echo "addons=${changed}" >> $GITHUB_OUTPUT
+          fi
 
   build:
     needs: init
