@@ -542,7 +542,7 @@ const EnergyFlowDashboard = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           {/* Panel List */}
-          <div className="max-h-48 overflow-y-auto space-y-1">
+          <div className="max-h-60 overflow-y-auto space-y-1">
             {pvPanels.panels.map((panel, i) => (
               <div key={i} className={`flex items-center justify-between p-2 rounded text-xs border ${
                 panel.active 
