@@ -1,0 +1,68 @@
+# Lukes Energy Flow Add-on Configuration
+name: "Lukes Energy Flow"
+version: "1.0.0"
+slug: "lukes-energy-flow"
+description: "Beautiful energy monitoring dashboard with advanced flow visualization for solar, battery, and home consumption"
+url: "https://github.com/LukaszMa78/ha-lukes-energy-flow"
+startup: services
+boot: auto
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+ports:
+  "8080/tcp": 8080
+webui: "http://[HOST]:[PORT:8080]"
+ingress: true
+ingress_port: 8080
+panel_icon: mdi:flash
+panel_title: "Lukes Energy Flow"
+hassio_api: true
+hassio_role: default
+homeassistant_api: true
+host_network: false
+privileged: []
+full_access: false
+
+options:
+  entities:
+    solar_panels: []
+    battery_soc: ""
+    battery_power: ""
+    battery_voltage: ""
+    battery_current: ""
+    grid_power: ""
+    grid_voltage: ""
+    grid_current: ""
+    grid_import_energy: ""
+    grid_export_energy: ""
+    inverter_power: ""
+    inverter_efficiency: ""
+    inverter_temperature: ""
+    inverter_ac_phases: []
+    house_total_power: ""
+    house_rooms: []
+
+schema:
+  entities:
+    solar_panels: ["str"]
+    battery_soc: "str"
+    battery_power: "str" 
+    battery_voltage: "str?"
+    battery_current: "str?"
+    grid_power: "str"
+    grid_voltage: "str?"
+    grid_current: "str?"
+    grid_import_energy: "str?"
+    grid_export_energy: "str?"
+    inverter_power: "str"
+    inverter_efficiency: "str?"
+    inverter_temperature: "str?"
+    inverter_ac_phases: ["str"]
+    house_total_power: "str"
+    house_rooms: ["str"]
+
+# image: "ghcr.io/lukaszma78/ha-lukes-energy-flow/{arch}"
